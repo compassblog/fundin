@@ -1,0 +1,183 @@
+<div class="banner-wrapper clearfix">
+    <!-- Banner图片轮播 -->
+    <div class="banner has-dots">
+    	#set($bannerHeight = 560)
+    	#set($bannerWidth = $bannerList.size() * 100)
+    	#set($eleWidth = 1.00 / $bannerList.size() * 100)
+        <ul style="width: $bannerWidth%; height: ${bannerHeight}px;">
+        	#foreach($banner in $bannerList)
+        		<li style="background-image: url(${banner.image});
+        				width: $eleWidth%;height: ${bannerHeight}px;">
+	                <a href="${banner.url}" target="_blank">
+	                    <div class="overlay" style="width: $eleWidth%;"></div>
+	                    <div class="slider-title" style="width: $eleWidth%;">
+	                        ${banner.title}
+	                    </div>
+	                </a>
+	            </li>
+        	#end
+        </ul>
+    </div>
+</div>
+
+<div class="list-wrapper clearfix">
+    <div class="left-list">
+        <!-- 左侧列表开始 -->
+        #foreach($projView in $projViewList)
+        <div class="list-item clearfix">
+            <div class="item-img">
+                <a href="/proj/${projView.id}" target="_blank"
+                   style="background-image: url(${projView.coverImg})"></a>
+                <div class="tag">#convertSubject(${projView.subject})</div>
+            </div>
+            <div class="item-info">
+                <p class="title">
+                    <a href="/proj/${projView.id}" target="_blank">${projView.title}</a>
+                </p>
+                <p class="intro">${projView.intro}</p>
+                <div class="infos">
+                    <div class="fl">
+                        <p>
+                            <a href="/user/${projView.userId}" target="_blank">
+                                <img src="${projView.userHeadImg}">${projView.userName}</a>
+                            <span>${projView.time}</span>
+                        </p>
+                    </div>
+                    <div class="fr">
+                        <p>
+                            #set($ratio = $projView.raisedRatio * 100)
+							#set($ratio = $numberTool.integer($ratio))
+                            <span>进度 $ratio%</span>
+                            
+                            #if(${projView.status} == 3)
+								<span>众筹成功</span>
+							#elseif(${projView.status} == 4)
+								<span>众筹失败</span>
+							#else
+                            	<span>剩余 $!{projView.restTime}</span>
+                            #end
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+        <!-- 左侧列表结束 -->
+        
+        #if($projViewList.size() >= ${page_size})
+	        <div class="load-more clearfix">
+	            <a class="more" href="javascript:;"><span>加载更多 
+	            	<i class="icon-caret-down"></i></span></a>
+	        </div>
+        #end
+        
+        <script>
+        	window.pageSize = ${page_size};
+        </script>
+    </div>
+
+	<script id="proj-list-tmpl" type="text/html">
+		{{each(idx, projView) projViewList}}
+			<div class="list-item clearfix">
+	            <div class="item-img">
+	                <a href="/proj/${projView.id}" target="_blank"
+	                   style="background-image: url(${projView.coverImg})"></a>
+	                <div class="tag">
+	                	{{if projView.subject == 1}}个人{{else projView.subject == 2}}社团
+	                	{{else projView.subject == 3}}公益{{else projView.subject == 4}}创业{{/if}}
+	                </div>
+	            </div>
+	            <div class="item-info">
+	                <p class="title">
+	                    <a href="/proj/${projView.id}" target="_blank">${projView.title}</a>
+	                </p>
+	                <p class="intro">${projView.intro}</p>
+	                <div class="infos">
+	                    <div class="fl">
+	                        <p>
+	                            <a href="/user/${projView.userId}" target="_blank">
+	                                <img src="${projView.userHeadImg}">${projView.userName}</a>
+	                            <span>${projView.time}</span>
+	                        </p>
+	                    </div>
+	                    <div class="fr">
+	                        <p>
+	                            <span>进度 ${projView.raisedRatio}%</span>
+	                            
+	                            {{if projView.status == 3}}
+									<span>众筹成功</span>
+								{{else projView.status == 4}}
+									<span>众筹失败</span>
+								{{else}}
+	                            	<span>剩余 ${projView.restTime}</span>
+	                            {{/if}}
+	                        </p>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+		{{/each}}
+	</script>
+
+    <div class="right-list">
+    	#include("notice.vm")
+    	
+    	#if($hotList && $hotList.size() > 0 )
+	        <div class="hot-block">
+	            <div class="hot-header">
+	                <h2><i class="icon-group"></i> 热门</h2>
+	            </div>
+	            <div class="hot-list clearfix">
+	            	#foreach($hot in $hotList)
+	                <a href="/proj/${hot.id}" target="_blank">
+	                    <div class="hot-item 
+	                    	#if($velocityCount % 2 == 0)
+	                    		even
+	                    	#else
+	                    		odd
+	                    	#end">
+	                        <span class="ranking 
+		                        #if($velocityCount <= 3)
+		                        	hot
+		                    	#end">$velocityCount</span>
+	                        <p>${hot.title}</p>
+	                    </div>
+	                </a>
+	                #end
+	            </div>
+	        </div>
+        #end
+        
+        #if($recommList && $recommList.size() > 0 )
+	        <div class="recomm-block">
+	        	<div class="hot-header">
+	                <h2><i class="icon-star"></i> 您可能认识的人/社团</h2>
+	            </div>
+	        	<div class="ck-slide">
+	        		<ul class="ck-slide-wrapper">
+					
+						#foreach($recommUser in $recommList)
+							#if($velocityCount % 3 == 1)
+							<li>
+							#end
+		    				<a class="item-a" href="/user/${recommUser.id}" target="_blank">
+		    					<img class="a-img" src="${recommUser.headImg}">
+		    					<p class="a-p">${recommUser.name}</p>
+		    				</a>
+		    				#if($velocityCount % 3 == 0)
+		    				</li>
+		    				#end
+						#end
+					</ul>
+					<a href="javascript:;" class="ctrl-slide ck-prev">上一页</a>
+					<a href="javascript:;" class="ctrl-slide ck-next">下一页</a>
+				</div>
+	        </div>
+        #end
+    </div>
+    
+</div>
+
+<script type="text/javascript" src="/static/js/lib/unslider.js"></script>
+<script type="text/javascript" src="/static/js/lib/ckslider.js"></script>
+<script type="text/javascript" src="/static/js/index.js"></script>

@@ -1,0 +1,18 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">我的站内信</p>
+</header>
+	
+<div class="container" style="margin-top: 50px;">
+	<div class="weui_panel weui_panel_access letter_bd">
+		#foreach($letter in $letterList.elements)
+	        <div class="weui_media_box weui_media_appmsg">
+	            <div class="weui_media_bd">
+	            	<p class="weui_media_desc">${letter.timeStr}</p>
+	                <h4 class="weui_media_title">${letter.title}</h4>
+	                <p class="weui_media_desc">${letter.content}</p>
+	            </div>
+	        </div>
+        #end
+    </div>
+</div>

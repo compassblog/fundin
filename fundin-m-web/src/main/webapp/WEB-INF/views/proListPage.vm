@@ -1,0 +1,8 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">$!{bar_title}</p>
+</header>
+	
+<div class="container" style="margin-top: 50px;">
+	#parse("/proList.vm")
+</div>

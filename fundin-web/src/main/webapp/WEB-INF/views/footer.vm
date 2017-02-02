@@ -1,0 +1,13 @@
+<!-- 底部导航栏 -->
+<div class="nav-footer clearfix">
+    <p class="about">
+        <a href="/help/help" target="_blank">服务攻略</a>
+        <span>|</span>
+        <a href="/help/state" target="_blank">用户协议</a>
+        <span>|</span>
+        <a href="http://weibo.com/u/5899945743/" target="_blank">关注微博</a>
+    </p>
+    <p class="copyright">
+        <span>© 2016-2020 Fundin - 成都众趣互动科技有限公司 蜀ICP备16001978号</span>
+    </p>
+</div>

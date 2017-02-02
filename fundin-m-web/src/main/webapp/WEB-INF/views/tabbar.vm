@@ -1,0 +1,20 @@
+#macro(setActive $head)
+	#if($navHead == $head)
+		weui_bar_item_on
+	#end
+#end
+
+<footer class="weui_tabbar">
+    <a href="/index" class="weui_tabbar_item #setActive('index')">
+        <i class="ui-icon-home foot-icon"></i>
+        <p class="weui_tabbar_label">首页</p>
+    </a>
+	<div class="plus">
+	    <a href="/startup" class="weui_tabbar_item #setActive('startup')">
+	    </a>
+    </div>
+    <a href="/me" class="weui_tabbar_item #setActive('me')">
+        <i class="ui-icon-personal foot-icon"></i>
+        <p class="weui_tabbar_label">我</p>
+    </a>
+</footer>

@@ -1,0 +1,161 @@
+<script>
+	var projId = ${proj.id};
+	var projTitle = "${proj.title}";
+	var projImgUrl = "${proj.coverImg}";
+	var appId = "${appId}";
+	var loginUserId = "${loginUserId}";
+</script>
+
+<div class="container" style="margin-bottom: 70px;">
+	<div class="pro_head lb">
+		<a class="pannel_head" href="/user/$!{user.id}">
+			<img src="$!{user.headImg}">
+			<span>$!{user.name}</span>
+		</a>
+		#if($!{proj.status} == 2)
+			<span class="time-tip">剩余$!{projInfo.restTime}</span>
+		#end
+	</div>
+	
+	<div class="pro_title">
+		<h2>$!{proj.title}</h2>
+	</div>
+	
+	<div class="pro_infos lb">
+		<span><strong>$!{proj.totalAmount}<small>元</small></strong>目标筹款</span>
+		<span><strong>$!{proj.raisedAmount}<small>元</small></strong>已筹金额</span>
+		<span><strong>$!{proj.raisedNum}<small>次</small></strong>支持次数</span>
+	</div>
+	
+	<div class="pro_intro lb">
+		<img src="$!{proj.coverImg}">
+		<p id="projDesc">$!{proj.intro}</p>
+	</div>
+	
+	<div class="pro_content lb">$!{proj.content}</div>
+	
+	<div class="pro_repay">
+		<div class="weui_panel weui_panel_access">
+	        <div class="weui_panel_hd repay_hd">回报</div>
+	        <div class="weui_panel_bd">
+	            <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg repay_box">
+	            
+	            #if ("$!{proj.repayContent}" != "" || "$!{proj.repayImage}" != "")
+					#if ("$!{proj.repayContent}" != "")
+						<div class="weui_media_bd">
+							<p class="cont">${proj.repayContent}</p>
+						</div>
+					#end
+					#if ("$!{proj.repayImage}" != "")
+						<div class="weui_media_hd repay_img">
+		                	<img class="weui_media_appmsg_thumb" src="$proj.repayImage">
+		                </div>
+					#end
+				#else
+					<div class="weui_media_bd">
+						<p class="cont">无</p>
+					</div>
+				#end
+	            </a>
+	        </div>
+    	</div>
+	</div>
+	
+	<div class="pro_commment">
+		<div class="weui_panel weui_panel_access">
+	        <div class="weui_panel_hd comment_hd">互动<strong>$!commentViewList.size()</strong></div>
+         	#if ($!commentViewList && $!commentViewList.size() != 0)
+		        <div class="weui_panel_bd">
+		        	#foreach($comment in $commentViewList)
+			            <div class="weui_media_box weui_media_text comment_box">
+			                <div class="weui_media_title comment_title">
+			                    <a class="comment_user" href="javascript:;">
+					        		<img src="$comment.userHeadImg">
+					        		<span>$comment.userName</span>
+					        	</a>
+					        	#if($!loginStatus)
+		                            #if($!loginUserId == ${comment.userId})
+		                            	<i class="ui-icon-delete c-icon c-delete" data-id="${comment.id}"></i>
+			                        #else
+			                        	<i class="ui-icon-comment c-icon c-comment" data-id="${comment.id}" data-user-id="${comment.userId}"></i>
+		                            #end
+                            	#end
+					        	<span class="c-time">${comment.time}</span>
+					        </div>
+		                    <p class="weui_media_desc">
+		                    	#if(${comment.replyUserId})
+                        			回复${comment.replyUserName} ： 
+                            	#end
+                            	${comment.msg}
+		                    </p>
+			            </div>
+				    #end
+		        </div>
+	        #end
+    	</div>
+	</div>
+</div>
+
+<footer class="pro_bar">
+	#if($!{projInfo.hasFollow})
+		<span class="bar-item">
+			<i class="ui-icon-liked bar-icon active"></i>已关注
+			<small>$!{projInfo.followNum}</small>
+		</span>
+	#else
+		<span class="bar-item" id="follow-btn">
+			<i class="ui-icon-liked bar-icon"></i>关注
+			<small>$!{projInfo.followNum}</small>
+		</span>
+	#end
+	
+	#if($!{proj.status} == 2)
+		#if($!{projInfo.hasSupport})
+			<a class="bar-item btn-support" href="javascript:;">
+				<span class="weui_btn btn-succ c-btn">您已支持</span>
+			</a>
+		#else
+			<a id="support-btn" class="bar-item btn-support" href="javascript:;">
+				<span class="weui_btn weui_btn_ext c-btn">我要支持</span>
+			</a>
+		#end
+	#elseif($!{proj.status} == 3)
+		<a class="bar-item btn-support" href="javascript:;">
+			<span class="weui_btn btn-succ c-btn">众筹成功</span>
+		</a>
+	#elseif($!{proj.status} == 4)
+		<a class="bar-item btn-support" href="javascript:;">
+			<span class="weui_btn btn-fail c-btn">众筹失败</span>
+		</a>
+	#end
+	
+	<span id="share-btn" class="bar-item">
+		<i class="ui-icon-share bar-icon"></i>分享
+	</span>
+</footer>
+
+<div id="share-block">
+    <div class="weui_mask_transition" id="share-mask"></div>
+    <div class="weui_actionsheet" id="share-action">
+        <div class="share-body">
+			<div class="share-row">
+				<a href="javascript:void(0);" class="s-item" id="share-wechat">
+					<i class="s-icon icon-wechat"></i>微信</a>
+				<a href="javascript:void(0);" class="s-item"
+					onclick="window.open('http://qzs.qzone.qq.com/open/connect/widget/mobile/qzshare/index.html?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+					<i class="s-icon icon-qq"></i>QQ空间</a>
+				<a href="javascript:void(0);" class="s-item"
+					onclick="window.open('http://service.weibo.com/share/mobile.php?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+					<i class="s-icon icon-weibo"></i>新浪微博</a>
+			</div>
+        </div>
+        <div class="weui_actionsheet_action">
+            <div class="weui_actionsheet_cell s-cancle" id="share-cancle">取消</div>
+        </div>
+    </div>
+</div>
+
+<img id="share-tip" src="/static/${dir}/image/share-tip.png" style="display: none;">
+
+#parse("/toast.vm")
+#requireModule(['project'])

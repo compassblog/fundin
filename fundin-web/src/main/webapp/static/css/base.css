@@ -1,0 +1,57 @@
+﻿@charset "utf-8";
+
+* {
+    margin :0;
+    padding :0;
+    box-sizing :border-box;
+    -moz-box-sizing :border-box;
+    -webkit-box-sizing :border-box;
+}
+
+body {
+    font-family: "Microsoft YaHei","微软雅黑",sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+table {border-collapse:collapse;border-spacing:0;}
+fieldset,img {border:none;}
+ol,ul {list-style:none;}
+h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal;}
+abbr,acronym {border:none;font-variant:normal;}
+caption,th {text-align:left;}
+input {outline:none;overflow:hidden;font-family:inherit;border:none;}
+textarea {outline:none;overflow:auto;resize:none;font-family:inherit;
+    word-wrap:break-word;word-break:break-all;line-height:normal;
+    vertical-align:baseline;*vertical-align:middle;}
+
+a, a:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.clearfix{
+    *zoom: 1;/*IE/7/6*/
+}
+.clearfix:before {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset!important;
+} 

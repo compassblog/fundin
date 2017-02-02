@@ -1,0 +1,1 @@
+"use strict";define(["Zepto","service","utils"],function(a,b,c){a(".message_cell").on("click",function(){var c={};c.type=a(this).attr("data-type"),""!=a(this).attr("data-projId")&&(c.projId=a(this).attr("data-projId"));var d=a(this);a(this).attr("data-count");b.updateMessageStatus(c,function(a){d.remove()})})});

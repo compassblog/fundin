@@ -1,0 +1,48 @@
+<script>
+	var appId = "${appId}";
+</script>
+
+<div class="container">
+	<div class="panel">
+		<div class="hd">
+		    <img class="logo" src="/static/${dir}/image/logo.png">
+		</div>
+	</div>
+	
+	<div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label" for="input-phone">手机号</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input id="input-phone" class="weui_input" type="text" placeholder="请输入您的手机号">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label" for="input-pwd">密码</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input id="input-pwd" class="weui_input" type="password" placeholder="请输入您的密码">
+            </div>
+        </div>
+    </div>
+    
+    <div class="check-block">
+        <p> 
+            <label class="ui-checkbox-s" for="remeberMe">
+                <input type="checkbox" id="remeberMe">
+            </label>记住我
+        </p>
+    </div>
+    
+    <a id="login-link" href="javascript:;" class="weui_btn weui_btn_ext btn-ctrl">登录</a>
+    
+    <p class="tip">
+    	没有账号？<a href="/m/register" class="tip-link">立即注册</a>
+    </p>
+    
+    <div class="login-third">
+    	<a href="javascript:void(0);" class="login-wx" id="login-wx">
+			<i class="login-wx-icon icon-wechat"></i>微信登录</a>
+    </div>
+</div>
+
+#parse("/toast.vm")
+#requireModule(['login'])

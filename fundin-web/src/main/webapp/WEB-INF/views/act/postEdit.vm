@@ -1,0 +1,139 @@
+<div class="wrapper clearfix">
+    <div class="startup">
+        <h2>编辑明信片大赛项目</h2>
+        
+        <script>
+        	window.repayWayData = "$!{proj.repayWay}";
+        </script>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目名称：</label>
+            <input placeholder="20字以内" class="text input-gray" type="text"
+                   maxlength="20" name="projTitle" readonly value="$!{proj.title}">
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目类别：</label>
+            <div class="cate-list">
+            	<span data-type="10" class="input-gray" style="width: 100px;">明信片大赛</span>
+            </div>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目简介：</label>
+            <textarea placeholder="简单介绍下你的项目吧，100字以内" maxlength="100" 
+            	name="projIntro" #if($fixed)
+            		readonly class="input-gray"
+            	#end)>$!{proj.intro}</textarea>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>封面图片：</label>
+            <span class="select-img">上传图片
+                <form id="coverForm" method="post" enctype="multipart/form-data">
+                    <input type="file" id="cover_img" name="imgFile" multiple="multiple"
+                        accept="image/jpg,image/gif,image/png,image/jpeg">
+                </form>
+            </span>
+            <strong>图片分辨率建议1024x1024，大小5M以内</strong>
+            <img id="coverImg" class="cover-img" src="$!{proj.coverImg}">
+        </div>
+        
+        <div class="form-item">
+            <label class="label">视频链接：</label>
+            <textarea placeholder="输入视频地址，一般为.swf后缀的flash视频地址" maxlength="150" 
+            	name="projVideo" #if($fixed)
+            		readonly class="input-gray"
+            	#end)>$!{proj.video}</textarea>
+        </div>
+        
+        <div class="form-item" style="height: 420px;margin-top: 50px">
+            <label class="label">项目主页：</label>
+            <div class="umeditor-container clearfix">
+                <script type="text/plain" id="myEditor"></script>
+            </div>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>筹集金额：</label>
+            <input class="text input-gray" type="text" style="width: 150px" value="$!{proj.totalAmount}" 
+                   placeholder="10万元以内" maxlength="5" readonly name="projAmount">
+            <span class="hint">元</span>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>筹资天数：</label>
+            <input class="text input-gray" type="text" style="width: 150px" value="$!{proj.days}" 
+                   placeholder="1~60" maxlength="2" readonly name="projDays">
+            <span class="hint">天</span>
+        </div>
+        
+        <div class="repay-group">
+            <h3>回报设置</h3>
+            
+            <div class="form-item">
+	            <label class="label" style="width: 136px;"><span class="text-red">*</span>项目众筹成功后，于</label>
+	            <input class="text input-gray" type="text" style="width: 150px" value="$!{proj.repayDays}" 
+	                   placeholder="1~30" maxlength="2" readonly name="repayDays">
+	            <span class="hint">天内发放回报</span>
+	        </div>
+	        
+	        <div class="form-item">
+	            <label class="label" style="width: 92px;"><span class="text-red">*</span>回报发放形式</label>
+	            <input type="radio" name="repayRadio" id="repayWay0" value="0" checked="checked"/>
+	            <label class="forRadio" for="repayWay0">快递</label>
+	            <input type="radio" name="repayRadio" id="repayWay1" value="1"/>
+	            <label class="forRadio" for="repayWay1" style="width: 80px;">现场派发</label>
+	            <input type="radio" name="repayRadio" id="repayWay2" value="2"/>
+	            <label class="forRadio" for="repayWay2">其它</label>
+	        </div>
+		    
+	    	<div class="repay-item clearfix" data-id="">
+                <span>￥</span>
+                <input class="repay input-gray" type="text" maxlength="3" 
+                	name="repay_input" placeholder="支持金额" value="3">
+                
+                <textarea maxlength="150" name="repay_text" class="input-gray" placeholder="项目成功后对支持者的回馈"
+                	readonly>众筹成功后，该设计作品将印制成明信片免费发送给您
+            	</textarea>
+            </div>
+        </div>
+        
+        <div class="p-edit-block">
+			<h3>项目进展</h3>
+			<p class="new-item">
+				<a href="javascript:;" class="edit-hint" id="edit-on">新增</a>
+				<a href="javascript:;" class="edit-hint" id="save-on" 
+					style="display:none;">保存</a>
+				<input type="text" class="edit-input" style="display:none;">
+			</p>
+			#foreach($progress in $progressList)
+				<p class="progress-item" data-id="${progress.id}">
+					<span class="progress-circle"></span>
+					<span class="progress-time">${progress.timeStr}</span>
+					<span class="progress-desc">${progress.progressDesc}</span>
+				</p>
+			#end
+		</div>
+		
+        <input type="button" id="save-edit-btn" class="btn-start" value="保存更改">
+    </div>
+    
+    <div class="preview">
+    	<h2>预览</h2>
+    	<div class="cover"></div>
+		<div class="intro"></div>
+		<div class="details"></div>
+    </div>
+    
+    <input id="projId" type="hidden" value="$!{proj.id}"/>
+    <input id="contentHtml" type="hidden" value='$!{proj.content}'/>
+    <input id="fixed" type="hidden" value="$!{fixed}"/>
+</div>
+
+<link rel="stylesheet" href="/static/partials/umeditor/themes/default/css/umeditor.min.css">
+
+<script type="text/javascript" src="/static/partials/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" src="/static/partials/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/static/partials/umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="/static/js/postEdit.js"></script>

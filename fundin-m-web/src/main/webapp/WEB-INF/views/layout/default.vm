@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>$!{page_title}</title>
+        <meta charset="utf-8">
+        <meta content="众筹，校园众筹，校园筹，Fundin，fundin，FundIn，社交众筹，众筹网，学生众筹" name="keywords">
+		<meta content="Fundin.cn是国内第一校园众筹社交平台, Fund your idea in Fundin.cn" name="description"/>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no" />
+		
+		<meta name="baidu-site-verification" content="DBEyD0GZTs" />
+		
+        <link rel="shortcut icon" href="/static/${dir}/image/x.png" type="image/x-icon">
+        <link rel="stylesheet" href="/static/${dir}/css/frozen.min.css">
+        <link rel="stylesheet" href="/static/${dir}/css/weui.min.css">
+        <link rel="stylesheet" href="/static/${dir}/css/wangEditor-mobile.min.css">
+        <link rel="stylesheet" href="/static/${dir}/css/app.css">
+        
+        <script>
+			var loginStatus = $!loginStatus;
+		</script>
+	
+		<script src="/static/${dir}/js/lib/require.js"></script>
+		<script>
+			require.config({
+				baseUrl: '/static/${dir}/js',
+				paths: {
+				    'Zepto': 'lib/zepto.min',
+				    'Zepto.touch': 'lib/zepto.touch',
+				    'jWeixin': 'http://res.wx.qq.com/open/js/jweixin-1.0.0',
+				    'wangEditor': 'lib/wangEditor-mobile.min'
+			  	},
+			  	shim: {
+				    'Zepto': {exports: 'Zepto'},
+				    'Zepto.touch':{deps:['Zepto']},
+				    'wangEditor':{deps:['Zepto']}
+			  	},
+			  	priority: ["Zepto"],
+			  	deps: ['Zepto']
+			});
+			require(["Zepto"], function() {});
+		</script>
+		
+    	<script>
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "//hm.baidu.com/hm.js?c14041ce2251611da920a492379b0a24";
+			  var s = document.getElementsByTagName("script")[0]; 
+			  s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+    </head>
+	
+	<body ontouchstart>
+		$screen_content
+	</body>
+	
+</html>

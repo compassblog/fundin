@@ -1,0 +1,148 @@
+<div class="wrapper clearfix">
+    <div class="startup">
+        <h2>新建项目</h2>
+        
+        <script>
+        	window.subjectData = "$!{proj.subject}";
+        	window.repayWayData = "$!{proj.repayWay}";
+        </script>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目名称：</label>
+            <input placeholder="20字以内" class="text" type="text"
+                   maxlength="20" name="projTitle" value="$!{proj.title}">
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目类别：</label>
+            <div class="cate-list">
+            	#if(${userType} == 0)
+                	<span data-type="1" class="selected">个人</span>
+                	<span data-type="3">公益</span>
+                	<span data-type="4">创业</span>
+                #elseif(${userType} == 1)
+                	<span data-type="2" class="selected">社团</span>
+                #end
+            </div>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>项目简介：</label>
+            <textarea placeholder="简单介绍下你的项目吧，100字以内"
+                      maxlength="100" name="projIntro" >$!{proj.intro}</textarea>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>封面图片：</label>
+            <span class="select-img">上传图片
+                <form id="coverForm" method="post" enctype="multipart/form-data">
+                    <input type="file" id="cover_img" name="imgFile" multiple="multiple"
+                        accept="image/jpg,image/gif,image/png,image/jpeg">
+                </form>
+            </span>
+            <strong>图片分辨率建议1024x1024，大小5M以内</strong>
+            <img id="coverImg" class="cover-img" src="$!{proj.coverImg}" 
+            	#if(!$!{proj.coverImg} || "" == $!{proj.coverImg})
+            		style="display: none;"
+            	#end">
+        </div>
+        
+        <div class="form-item">
+            <label class="label">视频链接：</label>
+            <textarea placeholder="输入视频地址，一般为.swf后缀的flash视频地址" 
+            	maxlength="150" name="projVideo">$!{proj.video}</textarea>
+        </div>
+        
+        <div class="form-item" style="height: 420px;margin-top: 50px">
+            <label class="label">项目主页：</label>
+            <div class="umeditor-container clearfix">
+                <script type="text/plain" id="myEditor"></script>
+            </div>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>筹集金额：</label>
+            <input class="text" type="text" style="width: 150px" value="$!{proj.totalAmount}" 
+                   placeholder="10万元以内" maxlength="5" name="projAmount">
+            <span class="hint">元</span>
+            <strong style="margin-left: 0px;position: relative;top: 2px;">
+            	（包含1%支付渠道费用和10%保证金）</strong>
+        </div>
+        
+        <div class="form-item">
+            <label class="label"><span class="text-red">*</span>筹资天数：</label>
+            <input class="text" type="text" style="width: 150px" value="$!{proj.days}" 
+                   placeholder="1~60" maxlength="2" name="projDays">
+            <span class="hint">天</span>
+        </div>
+        
+        <div class="repay-group">
+            <h3>回报设置</h3>
+            
+            <div class="form-item">
+	            <label class="label" style="width: 136px;"><span class="text-red">*</span>项目众筹成功后，于</label>
+	            <input class="text" type="text" style="width: 150px" value="$!{proj.repayDays}" 
+	                   placeholder="1~30" maxlength="2" name="repayDays">
+	            <span class="hint">天内发放回报</span>
+	        </div>
+	        
+	        <div class="form-item">
+	            <label class="label" style="width: 92px;"><span class="text-red">*</span>回报发放形式</label>
+	            <input type="radio" name="repayRadio" id="repayWay0" value="0" checked="checked"/>
+	            <label class="forRadio" for="repayWay0">快递</label>
+	            <input type="radio" name="repayRadio" id="repayWay1" value="1"/>
+	            <label class="forRadio" for="repayWay1" style="width: 80px;">现场派发</label>
+	            <input type="radio" name="repayRadio" id="repayWay2" value="2"/>
+	            <label class="forRadio" for="repayWay2">其它</label>
+	        </div>
+		    
+            <div class="repay-item clearfix">
+                <textarea maxlength="150" name="repay_text" 
+                	placeholder="项目成功后对支持者的回馈">$!{proj.repayContent}</textarea>
+                
+                <span class="repay-img">上传图片
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="file" name="imgFile" class="repay_img"
+                               multiple="multiple"
+                               accept="image/jpg,image/gif,image/png,image/jpeg">
+                    </form>
+                </span>
+                
+                <div class="repay-img-entity" 
+	            	#if($!{proj.repayImage} && $!{proj.repayImage} != "") 
+	            		style="display: inline-block;" 
+	            	#end>
+                	<img src="$!{proj.repayImage}" class="img-entity">
+                	<img src="/static/img/remove-x.png" class="remove-x">
+                </div>
+            </div>
+        </div>
+        
+        <div class="agree">
+            <input type="checkbox" id="agree-box">
+            <label for="agree-box">
+            	已阅读并同意<a href="/help/state" target="_blank">《Fundin用户协议》</a>
+            </label>
+        </div>
+        
+        <input type="button" id="draft-btn" class="btn-start" value="保存草稿">
+        <input type="button" id="startup-btn" class="btn-start" value="发起项目">
+    </div>
+    
+    <div class="preview">
+    	<h2>预览</h2>
+    	<div class="cover"></div>
+		<div class="intro"></div>
+		<div class="details"></div>
+    </div>
+    
+    <input id="projId" type="hidden" value="$!{proj.id}"/>
+    <input id="contentHtml" type="hidden" value='$!{proj.content}'/>
+</div>
+
+<link rel="stylesheet" href="/static/partials/umeditor/themes/default/css/umeditor.min.css">
+
+<script type="text/javascript" src="/static/partials/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" src="/static/partials/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/static/partials/umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="/static/js/startup.js"></script>

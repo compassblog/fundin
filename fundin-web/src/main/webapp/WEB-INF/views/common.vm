@@ -1,0 +1,134 @@
+<!-- 右下角快捷操作 -->
+<div class="top-ctrl">
+	<a href="javascript:void(0);"></a>
+</div>
+<div class="qrcode">
+	<p>关注</p>
+	<p>微信</p>
+</div>
+<div class="qrcode-img">
+	<p>&nbsp&nbsp&nbsp扫描下面二维码 </p>
+	<img src="/static/img/qrcode.jpg" width="120" height="120">
+</div>
+#if($!loginStatus)
+	<div class="feedback">
+		<p>反馈</p>
+		<p>投诉</p>
+	</div>
+#end
+
+<!-- 遮罩层 -->
+<div class="page-mask"></div>
+<div class="page-mask-light"></div>
+
+<!-- 消息提示框 -->
+<div class="message-block">
+	<img src="/static/img/alert-x.png" style="vertical-align: middle;">
+	<span id="message-content" style="font-size: 13px;padding: 8px;"></span>
+</div>
+
+<!-- 操作提示框 -->
+<div class="operation-block">
+	<div style="text-align: center;padding-bottom: 8px;
+		border-bottom: 1px solid rgba(150, 144, 144, 0.52)">
+		<img src="/static/img/alert-x.png" style="vertical-align: middle;">
+		<span id="operation-content" style="font-size: 13px;padding: 8px;">确定删除该图片？</span>
+	</div>
+	<div style="text-align: center;margin: 16px 0 10px;">
+		<input type="button" id="op-confirm" value="确定" class="op-btn">
+		<input type="button" id="op-cancle" value="取消" class="op-btn">
+	</div>
+</div>
+
+<!-- 反馈投诉弹窗 -->
+<div class="feedback-block">
+	<div class="header">
+		反馈与投诉
+		<i class="icon-remove"></i>
+	</div>
+	<div class="body">
+		<div class="content">
+			<textarea class="feedback-input" maxlength="150" 
+				placeholder="您有什么意见和建议可以随时反馈给我们哦。若您需要投诉，请在这里写下您要投诉的项目和原因哦。"></textarea>
+		</div>
+		<input type="button" class="submit-btn" id="feedback-btn" value="提交">
+	</div>
+</div>
+
+<!-- 登录弹框 -->
+<div class="login-block">
+	<img class="close-x" id="close-login" src="/static/img/close-x.png">
+	<div class="inner-wrapper">
+		<div class="logo"></div>
+		<div class="login-form">
+			<form class="validata-form" id="login-val-form">
+				<input name="loginEmail" value="" placeholder="邮箱"
+					   type="email" class="login-info" id="login-email">
+				<input type="password" name="loginPasswd" placeholder="密码"
+					   required class="login-info" id="login-passwd">
+				
+				<div style="text-align: left;margin: 6px 6px 8px 12px;">	   
+					<input type="checkbox" id="rememberMe" name="rememberMe" 
+						style="cursor: pointer" >
+					<label for="rememberMe" style="font-size: 14px;padding: 0 10px;
+						position: relative;top: -2px;cursor: pointer">
+						记住我
+					</label>
+					<a id="forget-pw" href="javascript:;" style="float: right; font-size: 14px;">忘记密码？</a>
+				</div>
+				
+				<input type="submit" value="登   录" class="btn-login" id="btn-login">
+			</form>
+		</div>
+		<div class="reg-hint">
+			<span>没有帐号？
+				<a id="reg-hint-a" href="javascript:;">立即注册</a>
+			</span>
+		</div>
+	</div>
+</div>
+
+<!-- 注册弹框 -->
+<div class="reg-block">
+	<img class="close-x" id="close-reg" src="/static/img/close-x.png">
+	<div class="inner-wrapper">
+		<div class="logo"></div>
+		<div class="reg-form">
+			<form class="validata-form" id="reg-val-form">
+				<div class="radioBlock">
+					<label class="radio">注册类型</label>
+					<div class="radioReg">
+						<input type="radio" name="regType" id="type0"
+							   value="0" checked="checked"/>
+						<label class="type" for="type0">个人</label>
+						<input type="radio" name="regType" id="type1"
+							   value="1"/>
+						<label class="type" for="type1">社团</label>
+					</div>
+				</div>
+				
+				<input style="display:none">
+				<input name="regName" value="" placeholder="真实姓名或社团名称(填写后不可更改)"
+					   type="text" class="reg-info" autocomplete="off" maxlength="15">
+				<input style="display:none">
+				<input name="regEmail" value="" placeholder="邮箱(填写后不可更改)"
+					   type="email" class="reg-info" autocomplete="off">
+				<input style="display:none">
+				<input type="password" name="regPasswd" placeholder="密码"
+					   required class="reg-info" autocomplete="off">
+			    <input style="display:none">
+				<input type="password" name="confirmPasswd" placeholder="确认密码"
+					   required class="reg-info" autocomplete="off">
+				<input type="text" name="invPhone" placeholder="邀请人手机号"
+					   class="reg-info" autocomplete="off">
+					   
+				<input type="submit" value="立 即 加 入" class="btn-reg" id="btn-reg">
+			</form>
+		</div>
+		<div class="login-hint">
+			<span>已有帐号？
+				<a id="login-hint-a" href="javascript:;">直接登录</a>
+			</span>
+		</div>
+	</div>
+</div>

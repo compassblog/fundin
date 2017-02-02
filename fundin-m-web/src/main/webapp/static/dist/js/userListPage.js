@@ -1,0 +1,1 @@
+"use strict";define(["Zepto","utils"],function(a,b){a(".invite").on("click",function(){b.showToastMsg("推荐朋友注册Fundin，输入您的手机号，即可获得红包哦!","tips")})});

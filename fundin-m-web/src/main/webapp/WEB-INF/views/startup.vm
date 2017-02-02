@@ -1,0 +1,201 @@
+<script>
+	var projId = "$!{proj.id}";
+	var projTitle = "${proj.title}";
+	var projImgUrl = "${proj.coverImg}";
+	var appId = "${appId}";
+	var loginUserId = "${loginUserId}";
+	var projSubject = "${proj.subject}";
+	var projRepayWay = "${proj.repayWay}";
+	var projContent = '$!{proj.content}';
+</script>
+
+<div class="container" style="margin-bottom: 30px;">
+	<div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>项目名称</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<input class="weui_input" type="text" placeholder="20字以内"
+			        		maxlength="20" name="projTitle" value="$!{proj.title}">
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>项目类别</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	 <div id="type" class="cate-list">
+			            	#if(${user.type} == 0)
+			                	<span data-type-s="1">个人</span>
+			                	<span data-type-s="3">公益</span>
+			                	<span data-type-s="4">创业</span>
+			                #elseif(${user.type} == 1)
+			                	<span data-type-s="2" class="selected">社团</span>
+			                #end
+			            </div>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>项目简介</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<textarea class="weui_textarea" placeholder="简单介绍下你的项目吧，100字以内"
+                    	  maxlength="100" name="projIntro" rows="3">$!{proj.intro}</textarea>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>封面图片</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary" style="text-align: center;">
+			     		<span class="select-img">上传图片
+			        	<form id="coverForm" method="post" enctype="multipart/form-data">
+		                    <input type="file" id="cover_img" name="imgFile" multiple="multiple"
+		                        accept="image/*">
+		                </form>
+		                </span>
+			            <img id="coverImg" class="cover-img" src="$!{proj.coverImg}" 
+			            	#if(!$!{proj.coverImg} || "" == $!{proj.coverImg})
+			            		style="display: none;"
+			            	#end">
+			            <input id="cover_img_v" type="hidden"/>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd">项目主页</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<textarea id="wang"></textarea>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>筹集金额</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<input class="weui_input" type="text" value="$!{proj.totalAmount}" 
+                  			placeholder="10万元以内(包含1%支付渠道费用和10%保证金)" maxlength="5" name="projAmount">
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>筹资天数</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<input class="weui_input" type="text" value="$!{proj.days}" 
+                 			placeholder="1~60天" maxlength="2" name="projDays">
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>项目众筹成功后，于多少天内发放回报</div>
+		<label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<input class="weui_input" type="text" placeholder="1-30天"
+			   		     	value="$!{proj.repayDays}" maxlength="2" name="repayDays">
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd"><span class="text-red">*</span>回报发放形式</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div id="way" class="weui_cell_bd weui_cell_primary">
+			        	 <div class="cate-list">
+			        		<span data-type-w="0">快递</span>
+		                	<span data-type-w="1">现场派发</span>
+		                	<span data-type-w="2">其它</span>
+			            </div>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd">回报内容</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary">
+			        	<textarea class="weui_textarea" name="repay_text" 
+	                	placeholder="项目成功后对支持者的回馈">$!{proj.repayContent}</textarea>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_cells pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd">回报相关图片</div>
+        <label class="weui_cell weui_check_label repay_cell">
+            <div class="weui_cell_bd weui_media_box repay_bd">
+            	<div class="weui_cell">
+			     	<div class="weui_cell_bd weui_cell_primary" style="text-align: center;">
+			     		<span class="select-img">上传图片
+				        	<form method="post" enctype="multipart/form-data">
+			                    <input type="file" id="repay_img" name="imgFile" multiple="multiple" class="repay_img"
+			                        accept="image/*">
+			                </form>
+		                </span>
+	              		<img id="repayImg" class="cover-img" src="$!{proj.repayImage}" 
+			            	#if(!$!{proj.repayImage} || "" == $!{proj.repayImage})
+			            		style="display: none;"
+			            	#end">
+	              		<input id="repay_img_v" type="hidden"/>
+			      	</div>
+				</div>
+            </div>
+        </label>
+    </div>
+    
+    <div class="weui_btn_area">
+    	<a class="weui_btn weui_btn_primary" href="javascript:" id="draft-btn">保存草稿</a>
+    	<a class="weui_btn weui_btn_primary" href="javascript:" id="startup-btn">发布项目</a>
+    </div>
+</div>
+
+#parse("/toast.vm")
+#requireModule(['startup'])

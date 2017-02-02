@@ -1,0 +1,325 @@
+<div class="wrapper clearfix">
+	<div class="header clearfix">
+		<img class="cover-item" src="${proj.coverImg}">
+		<h1>$!{proj.title}</h1>
+		
+		#if($!loginStatus)
+			<p class="user-action">
+				#if($canEdit || ${projInfo.hasGood})
+					<input type="button" class="act-btn" 
+						value="已赞$!{projInfo.goodNum}"/>
+				#else
+					<input id="good" type="button" class="act-btn" 
+						value="赞$!{projInfo.goodNum}"/>
+				#end
+				
+				#if($canEdit || ${projInfo.hasFollow})
+					<input type="button" class="act-btn" 
+						value="已关注$!{projInfo.followNum}"/>
+				#else
+					<input id="follow" type="button" class="act-btn" 
+						value="关注$!{projInfo.followNum}"/>
+				#end
+			</p>
+		#end
+				
+		<div style="display: table;margin: 4px auto;">
+			<a class="user-item" href="/user/${proj.userId}" target="_blank">
+				<img src="$!{user.headImg}">
+				<span>$!{user.name}</span>
+			</a>
+			<span class="item"> | </span>
+			<a class="comment-item" href="/search?subject=${proj.subject}&require=new&location=national">
+				<i class="icon-tag"></i> 
+				#convertSubject(${proj.subject}) 
+			</a>
+			<span class="item"> | </span>
+			<a class="comment-item" href="/search?subject=&require=new&location=$!{projInfo.province} ">
+				<i class="icon-map-marker"></i> 
+				$!{projInfo.province} 
+			</a>
+			<span class="item"> | </span>
+			<a class="comment-item" href="#comments">
+				<i class="icon-comment"></i> 
+				互动 $!commentViewList.size()
+			</a>
+		</div>
+		
+		<div style="width: 160px;margin: 0 auto 16px;">
+			<span style="font-size: 10px;vertical-align: top;padding: 0 10px;">分享至</span>
+			<a href="javascript:void(0);" title="分享到QQ空间"
+				onclick="window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+				<img src="http://qzonestyle.gtimg.cn/ac/qzone_v5/app/app_share/qz_logo.png" 
+					alt="分享到QQ空间"/></a>
+			<a href="javascript:void(0);" title="分享到新浪微博"
+				onclick="window.open('http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+				<img src="http://t.sina.com.cn/favicon.ico" alt="分享到新浪微博" 
+					style="width:16px;height:16px;margin-left:6px;"/></a>
+			<a href="javascript:void(0);" title="分享到人人网"
+				onclick="window.open('http://share.renren.com/share/buttonshare?link='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+				<img src="http://s.xnimg.cn/favicon-rr.ico" alt="分享到人人网" 
+					style="width:16px;height:16px;margin-left:6px;"/></a>
+			<a href="javascript:void(0)" title="分享到豆瓣"
+				onclick="window.open('https://www.douban.com/share/service?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title));return false;">
+				<img src="http://img3.doubanio.com/pics/fw2douban_s.png" alt="分享到豆瓣" 
+					style="width:16px;height:16px;margin-left:6px;"/></a>
+		</div>
+	</div>
+	
+	<div class="proj-left clearfix">
+		#if($progressList.size() != 0)
+			<div class="p-block">
+				#foreach($progress in $progressList)
+					<p class="progress-item" data-id="${progress.id}">
+						<span class="progress-circle"></span>
+						<span class="progress-time">${progress.timeStr}</span>
+						<span class="progress-desc">${progress.progressDesc}</span>
+					</p>
+				#end
+			</div>
+		#end
+		
+		<div class="cover">
+			<img src="${proj.coverImg}">
+		</div>
+		
+		<div class="intro">$!{proj.intro}</div>
+		#if(${proj.video} != "")
+			<div class="video">
+				<object id="videoObj" name="myVideo" width="100%" height="100%" align="top"
+						codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0">
+					<param value="${proj.video}" name="video">
+					<param value="high" name="quality">
+					<param value="transparent" name="wmode">
+					<param value="true" name="allowFullScreen">
+					<param value="never" name="allowScriptAccess">
+					<embed width="100%" height="100%" align="top"
+						   pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"
+						   allowscriptaccess="never" allowfullscreen="true" wmode="transparent" name="myVideo"
+						   swliveconnect="true" quality="high" allownetworking="all" src="${proj.video}">
+				</object>
+			</div>
+		#end
+		
+		<div class="details">
+			$!{proj.content}
+		</div>
+		
+		<div class="comments-block">
+			#if($!loginStatus)
+				<div class="add-comment">
+					<div class="user-head">
+						<img src="$!{userHeadImg}">
+					</div>
+					<div class="comment-form">
+						<textarea placeholder="说点什么吧" id="new-comment-text"
+							  maxlength="100" name="comment-input" ></textarea>
+						<input type="button" class="submit-btn" id="comment-btn" value="发布">
+					</div>
+				</div>
+			#end
+			
+			<div class="comments-list clearfix" id="comments">
+				<div class="comment-header">
+					共 <code id="comment-count">$!commentViewList.size()</code> 条互动
+				</div>
+				#foreach($comment in $commentViewList)
+				<div class="comment-group">
+					<div class="single-comment">
+						<div class="comment-user">
+                            <a class="user-info" href="/user/${comment.userId}" target="_blank">
+                                <img src="$!{comment.userHeadImg}">
+                                	${comment.userName}
+                                #if(${comment.userId} == ${proj.userId})
+                                	<span class="icon-star"></span>
+                                #end
+                            </a>
+                            
+                           	#if($!loginStatus)
+	                            #if($!loginUserId != ${comment.userId})
+		                            <a href="javascript:;" class="link-reply comment-link" 
+		                            	data-id="${comment.id}" 
+		                            	data-user-id="${comment.userId}">回复</a>
+		                        #else
+		                        	<a href="javascript:;" class="link-del comment-link" 
+		                            	data-id="${comment.id}">删除</a>
+	                            #end
+                            #end
+                            <span class="comment-time">${comment.time}</span>
+                        </div>
+                        <div class="comment-show-block">
+                            <p class="comment-txt">
+                            	#if(${comment.replyUserId})
+                            		回复${comment.replyUserName} ： 
+                            	#end
+                            	${comment.msg}
+                            </p>
+                        </div>
+					</div>
+				</div>
+				#end
+			</div>
+		</div>
+	</div>
+	
+	<div class="proj-right clearfix">
+		<div class="support clearfix">
+			<div class="inner">
+				<div class="big">
+					<p class="number">$!{proj.raisedNum}</p>
+					<p class="desc">支持数</p>
+				</div>
+				<div class="big">
+					<p class="number">￥$!{proj.raisedAmount}</p>
+					<p class="desc">已筹款</p>
+				</div>
+				#set($ratio = $proj.raisedRatio * 100)
+				#set($ratio = $numberTool.integer($ratio))
+				<p class="ratio">$ratio%</p>
+				<div class="progress"><p style="width:$!ratio%"></p></div>
+				<p class="info">
+					#if(${proj.status} == 3)
+						<!-- <span class="fl" style="color: #ff6c00;">众筹成功</span> -->
+					#elseif(${proj.status} == 4)
+						<!-- <span class="fl" style="color: gray;">众筹失败</span> -->
+					#else
+						<span class="fl">
+							剩余<b>$!{projInfo.restTime}</b>
+						</span>
+					#end
+					<span class="fr">
+						目标筹款<b>￥$!{proj.totalAmount}</b>
+					</span>
+				</p>
+			</div>
+		</div>
+
+		#if(${proj.status} == 3)
+			<div class="btn-has-support">该项目已众筹成功</div>
+		#elseif(${proj.status} == 4)
+			<div class="btn-has-support">该项目已众筹失败</div>
+		#else
+			#if(${projInfo.hasSupport})
+				<div class="btn-has-support">您已支持过该项目</div>
+			#else
+				<div class="btn-support">支持TA</div>
+				<div class="support-hint">
+				<strong>支持后，若项目众筹成功，您将获得相应回报；若项目众筹失败，我们将在众筹期满后退款给您</strong>
+				</div>
+			#end
+		#end
+		
+		<div class="repay clearfix" style="display: block">
+			<h1 class="head clearfix">
+				<span class="supporter-head" style="font-size: 24px">回报</span>
+			</h1>
+			<div class="body">
+				#if ("$!{proj.repayContent}" != "" || "$!{proj.repayImage}" != "")
+					#if ("$!{proj.repayContent}" != "")
+						<p class="cont">${proj.repayContent}</p>
+					#end
+					#if ("$!{proj.repayImage}" != "")
+						<p class="image"><img src="${proj.repayImage}"></p>
+					#end
+				#else
+					<p class="cont">无</p>
+				#end
+				
+			</div>
+			<h1 class="head clearfix">
+				#if (${proj.raisedNum} != '0')
+				<span class="supporter-head">${proj.raisedNum}位支持者支持了TA</span>
+				#else
+				<span class="supporter-head">还没有人支持，快来支持吧！</span>
+				#end
+			</h1>
+			<div class="support-body clearfix">
+				#foreach($repayUser in $repayUserList.elements)
+				<a class="item-a" href="/user/${repayUser.id}" target="_blank">
+					<img class="a-img" src="${repayUser.headImg}">
+					<p class="a-p">${repayUser.name}</p>
+					<p class="a-p">支持${repayUser.supportAmount}元</p>
+				</a>
+				#end
+			</div>
+			#if($repayUserList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">${repayUserList.pageCount}</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$repayUserList.pageSize" 
+    					data-tmpl="repay-user-tmpl" data-ajax="getRepayUserList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<script id="repay-user-tmpl" type="text/html">
+		{{each(idx, repayUser) dataList}}
+			<a class="item-a" href="/user/${repayUser.id}" target="_blank">
+    			<img class="a-img" src="${repayUser.headImg}">
+    			<p class="a-p">${repayUser.name}</p>
+    			<p class="a-p">支持${repayUser.supportAmount}元</p>
+    		</a>
+		{{/each}}
+	</script>
+	
+	<input id="canEdit" type="hidden" value="${canEdit}"/>
+	<input type="hidden" id="projectId" value="${proj.id}"/>
+</div>
+
+<div class="pay-block">
+	<div class="top1">
+		<span id="top-head">支持该项目</span>
+		<i class="icon-remove"></i>
+	</div>
+	<div class="info-content" id="content-1">
+		<div class="form-item">
+            <label class="label"><span class="text-red">*</span>支持金额</label>
+            <input class="text" type="text" id="payAmount" 
+            	style="width: 320px;" maxlength="20">
+        </div>
+      	<div class="form-item">
+			<label class="label">我的红包</label>
+			#if ($redPacketList.size() > 0)
+			<div class="checkbox-group">
+				#foreach($redPacket in $redPacketList)
+					#if(${redPacket.canUse})
+					<input type="checkbox" name="redpacket" id="redpacket${redPacket.id}" value="${redPacket.amount}"/>
+					<label class="forCheckBox" for="redpacket${redPacket.id}">￥${redPacket.amount} ${redPacket.typeName}×${redPacket.count}</label>
+					#else
+					<input type="checkbox" name="redpacket" id="redpacket${redPacket.id}" value="${redPacket.amount}" disabled="disabled"/>
+					<label class="forCheckBox" for="redpacket${redPacket.id}">￥${redPacket.amount} ${redPacket.typeName}×${redPacket.count}(不可用)</label>
+					#end
+				#end
+			</div>
+			#end
+		</div>
+	</div>
+	<div class="pay-content">
+		 <div class="pay-way">
+			<i class="logo"></i>
+			<span class="amount fr"></span>
+		</div>
+		
+		<input type="button" class="pay-btn" value="确认支付">
+	</div>
+</div>
+
+<div class="QR-block">
+	<div class="top2">
+		<i class="icon-remove"></i>
+	</div>
+	<div class="pay-content">
+		<div class="pay-way">
+			<i class="logo"></i>
+			<span class="amount fr"></span>
+		</div>
+		<img class="QR-img" src="">
+		<img class="QR-hint" src="/static/img/WePayHint.png"> 
+	</div>
+</div>
+
+<script type="text/javascript" src="/static/js/project.js"></script>

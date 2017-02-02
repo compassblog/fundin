@@ -1,0 +1,17 @@
+#macro(requireModule $mods)
+	<script>
+		require([#foreach($mod in $mods)"$mod",#end]);
+	</script>
+#end
+
+#macro(getSex $sex)
+	#if($!sex == 0)男#else女#end
+#end
+
+#macro(getLink $clause $link)
+	#if($!clause)
+		$!link
+	#else
+		javascript:;
+	#end
+#end

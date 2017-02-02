@@ -1,0 +1,48 @@
+#if ($!userList && $!userList.size() > 0)
+    <div class="panel_list">
+    	#foreach ($user in $userList)
+		    <div class="weui_panel weui_panel_access user_panel">
+		        <div class="weui_panel_bd">
+		            <a href="/user/$!{user.id}" class="weui_media_box weui_media_appmsg">
+		                <div class="weui_media_hd">
+		                	<img class="weui_media_appmsg_thumb" src="$!{user.headImg}">
+		                </div>
+		                <div class="weui_media_bd">
+		                    <h4 class="weui_media_title">$!{user.name}</h4>
+		                    #if($!{user.type} == 0)
+			                    <p class="weui_media_desc">
+			                    	<span>#getSex($!{user.sex})</span>
+			                    	<span>$!{user.constellation}</span>
+			                    	#if($!{user.entryYear})
+			                    		<span>$!{user.entryYear}级</span>
+			                    	#end
+			                    </p>
+			                    <p class="weui_media_desc">
+			                    	<span>$!{user.schoolModel.province}</span>
+									<span>$!{user.schoolModel.univ}</span>
+									<span>$!{user.schoolModel.school}</span>
+			                    </p>
+		                    #else
+		                    	#if($!{user.birthday})
+			                    	<p class="weui_media_desc">
+				                    	<span>创建于$!{user.birthday}年</span>
+				                    </p>
+			                    #end
+			                    <p class="weui_media_desc">
+			                    	<span>$!{user.schoolModel.province}</span>
+									<span>$!{user.schoolModel.univ}</span>
+			                    </p>
+		                    #end
+		                </div>
+		            </a>
+		        </div>
+		    </div>
+	    #end
+    </div>
+#else
+	<div class="panel_list panel">
+		<div class="hd">
+		    <h1 class="page_title">暂无数据...</h1>
+		</div>
+	</div>
+#end

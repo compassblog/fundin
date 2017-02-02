@@ -1,0 +1,18 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">我的红包</p>
+</header>
+	
+<div class="container" style="margin-top: 50px;">
+	<div class="weui_panel weui_panel_access letter_bd">
+		#foreach($redPacket in $redPacketList)
+	        <div class="weui_media_box weui_media_appmsg">
+	            <div class="weui_media_bd">
+	            	<p class="weui_media_desc">${redPacket.typeName}</p>
+	                <h4 class="weui_media_title">¥${redPacket.amount}</span>&nbsp;&nbsp;×&nbsp;&nbsp;${redPacket.count}</h4>
+	                <p class="weui_media_desc">${redPacket.endTimeStr}之前使用</p>
+	            </div>
+	        </div>
+        #end
+    </div>
+</div>

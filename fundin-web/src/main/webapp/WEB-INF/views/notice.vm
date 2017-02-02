@@ -1,0 +1,58 @@
+<div class="hot-block">
+    <div class="hot-header">
+        <h2><i class="icon-desktop"></i> 公告</h2>
+    </div>
+    <div class="hot-list clearfix">
+        <div class="hot-item even" style="display: block;">
+            <p style="color: black;display: block;">
+            	<a href="javascript:;" onclick="showNotice(2)"/>Fundin高校人才招募专帖</a>
+            </p>
+        </div>
+        <div class="hot-item odd" style="display: block;">
+            <p style="color: black;display: block;">
+            	<a href="javascript:;" onclick="showNotice(3)"/>关于用户注册实名制的通知</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="info-block" id="noticeBlock2" style="left: 32%;top: 32%">
+	<div class="info-h">
+		<span id="letter-title">Fundin高校人才招募专帖</span>
+		<i class="icon-remove"></i>
+	</div>
+	<div class="info-content">
+		<div id="letter-content" class="letter-content">
+			<p>由于Fundin知名度的持续扩大，诚邀高校人才加入我们，一个年轻富有激情的团队！</p>
+			
+			<p>我们在招：UI设计和前端开发工程师</p>
+			<p>我们在招：校园大使，负责所在高校或城市的校园推广工作</p>
+			
+			<p>有意者请将您的简历发送至Fund_in@163.com，期待您的加入。</p>
+		</div>
+	</div>
+</div>
+
+<div class="info-block" id="noticeBlock3" style="left: 32%;top: 32%">
+	<div class="info-h">
+		<span id="letter-title">关于用户注册实名制的通知</span>
+		<i class="icon-remove"></i>
+	</div>
+	<div class="info-content">
+		<div id="letter-content" class="letter-content">
+			<p>亲爱的用户，Fundin.cn是以用户实名制为基础的校园众筹平台，我们在热切欢迎您注册Fundin.cn的同时也希望您能够填写自己的真实姓名。我们将会定期审查注册用户的信息，一旦发现未使用真实姓名的用户将会采取封号的措施，敬请谅解。</p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(".info-block i").on("click", function() {
+    	$(this).parent().parent().hide();
+    	$(".page-mask").hide();
+    });
+    
+    window.showNotice = function(noticeId) {
+		$(".page-mask").show();
+		$("#noticeBlock" + noticeId).show();
+    };
+</script>

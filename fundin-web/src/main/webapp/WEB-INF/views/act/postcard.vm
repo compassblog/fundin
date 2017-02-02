@@ -1,0 +1,127 @@
+#macro(getColor $count)
+	#if(0 == $count % 4)
+		#00e3e5
+	#elseif(1 == $count % 4)
+		#ff3642
+	#elseif(2 == $count % 4)
+		#a695f9
+	#elseif(3 == $count % 4)
+		#fffb78
+	#end
+#end
+	
+<div class="wrapper clearfix">
+    <div class="poster">
+    </div>
+    
+    <div class="clearfix" style="margin: 40px auto;">
+		<div class="panel panel-success rule-panel" style="width: 600px;height: 638px;">
+		   <div class="panel-heading">
+		      <h3 class="panel-title">参赛要求</h3>
+		   </div>
+		   <div class="panel-body">
+		      <p>1. 投稿方式</p>
+		      <p>将电子版作品（如为纸质作品请拍照成高清图片上传）和设计理念编辑成为文字或者视频以项目的形式发布在 www.fundin.cn网站上，并设计奖励金额：3元，奖励内容：感谢支持，获得明信片成品一张（若设计作品为一个系列，则会随机得到其中一张）。</p>
+			  <p>2. 作品要求</p>
+			  <p>（1）内容符合“独趣不如众趣”的主题；</p>
+			  <p>（2）明信片按照尺寸标准如下：标准尺寸规格:165×102(毫米)；</p>
+			  <p>（3）作品要有创意性、独特性、设计性。设计在视觉冲击力、内涵丰富性、体系完整性、易推广性、不可复制性上有一项或多项突出特点；</p>
+			  <p>（4）参赛作品必须由参赛者本人原创。参赛者应遵守学术道德和学术规范，严禁剽窃。大赛主办方一旦发现参赛作品涉嫌抄袭，将严肃处理，立即取消其参赛资格；</p>
+			  <p>（5）若参评作品侵犯第三方合法权益或因参与人的其他过错而使本赛组织方和主办方遭受任何名誉或经济上的损失，组委会有权对相关人员采取适当的措施，同时保留向其追究和索赔的权利；</p>
+			  <p>（6）对于获奖作品，大赛主办方有权无偿展示、展出、结集出版。主办方可不经投稿人同意进行修改提升，不再向作者另付稿酬。主办方除本活动奖金外不再向作者另附稿酬。</p>
+		   </div>
+		</div>
+		
+		<div class="panel panel-success rule-panel">
+		   <div class="panel-heading">
+		      <h3 class="panel-title">比赛流程</h3>
+		   </div>
+		   <div class="panel-body">
+		      <p>
+		      	1. 海选赛：在指定开始时间，选手将设计的明信片正面和设计理念（文字或者2分钟以内的视频）以创建项目的形式在www.fundin.cn网站上发布，进行奖励金额为3元的奖励性众筹，众筹总金额为99元，众筹成功者将进入评选赛；
+		      </p>
+		      <p>
+		      	2. 评选赛：在指定时间内进行众筹，结束后所有众筹成功的项目所得资金将由www.fundin.cn保存，用于将设计作品统一印发明信片，制作成成品后将成品交给发起者，让发起众筹者进行众筹奖励发放。
+		      </p>
+		   </div>
+		</div>
+		
+		<div class="panel panel-success rule-panel">
+		   <div class="panel-heading">
+		      <h3 class="panel-title">奖项设置</h3>
+		   </div>
+		   <div class="panel-body">
+		      <p>最佳众趣互动奖：奖金800元＋获奖证书＋刀画体验＋优秀明信片作品集</p>
+		      <p>最佳众趣设计奖：奖金300元＋获奖证书＋刀画体验＋优秀明信片作品集</p>
+		      <p>最佳众趣理念奖：奖金100元＋获奖证书＋刀画体验＋优秀明信片作品集</p>
+		   </div>
+		</div>
+		<div class="panel panel-success rule-panel">
+		   <div class="panel-heading">
+		      <h3 class="panel-title">大赛时间</h3>
+		   </div>
+		   <div class="panel-body">
+		      <p>2016年5月16日--2016年6月4日</p>
+		      <p>1.	海选赛：截止2016年5月31日23:59</p>
+		      <p>2.	评选赛及明信片发放：2016年6月1日--2016年6月4日</p>
+		      <p>3.	颁奖时间：2016年6月5日</p>
+		   </div>
+		</div>
+    </div>
+    
+    <div class="well well-lg" style="border-color: #ff6c00;background-color: white;
+    	box-shadow: 4px 4px 4px #ff6c00">
+		<p><a target="_blank" href="/user/150"/>凌瑞富</a> 获得本次比赛“最佳众趣互动奖”</p>
+		<p><a target="_blank" href="/user/193"/>戚静</a> 获得本次比赛“最佳众趣设计奖”</p>
+		<p><a target="_blank" href="/user/152"/>张玲</a> 获得本次比赛“最佳众趣理念奖”</p>
+	</div>
+    
+    <div class="clearfix">
+    	#foreach($projView in $!projViewList)
+    		#if($velocityCount % 2 == 1)
+    			#set($fd = 'fl')
+    		#else
+    			#set($fd = 'fr')
+    		#end
+		    <div class="card clearfix" style="border-color: #getColor($velocityCount)">
+		    	<div class="card1 $fd">
+                    <a href="/user/${projView.userId}" target="_blank">
+                        <img src="${projView.userHeadImg}"></a>
+                </div>
+		        <div class="card2 $fd">
+		            <a href="/proj/${projView.id}" target="_blank"
+		               style="background-image: url(${projView.coverImg})"></a>
+		        </div>
+		        <div class="card3 $fd">
+		            <p class="title">
+		                <a href="/proj/${projView.id}" 
+		                	target="_blank">${projView.title}</a>
+		            </p>
+		            <p class="name">
+		            	<a href="/user/${projView.userId}" 
+		                	target="_blank">${projView.userName}</a>
+		            </p>
+		            <p class="intro">${projView.intro}</p>
+                    <p class="infos">
+                        #set($ratio = $projView.raisedRatio * 100)
+						#set($ratio = $numberTool.integer($ratio))
+                        <span>进度 $ratio%</span>
+                        
+                        #if(${projView.status} == 3)
+							<span>众筹成功</span>
+						#elseif(${projView.status} == 4)
+							<span>众筹失败</span>
+						#else
+                        	<span>剩余 $!{projView.restTime}</span>
+                        #end
+                    </p>
+		        </div>
+		    </div>
+        #end
+    </div>
+    
+</div>
+
+</script>
+
+<script type="text/javascript" src="/static/js/postcard.js"></script>

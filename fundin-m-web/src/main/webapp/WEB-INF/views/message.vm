@@ -1,0 +1,69 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">消息</p>
+</header>
+<div class="container" style="margin-top: 50px;">
+    
+    <div class="weui_cells weui_cells_access">
+    	#foreach($message in $messages)
+    		#if($message.type == "attention")
+        		<a class="weui_cell message_cell" href="/beAtten/$!{userid}" data-type="attention" data-count="${message.count}">
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p>有${message.count}人关注了您</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+		    #if($message.type == "letter")
+		    	<a class="weui_cell message_cell" href="/letter/$!{userid}" data-type="letter" data-count="${message.count}">
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p>您有${message.count}封新的站内信</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+		    #if($message.type == "comment")
+		    	<a class="weui_cell message_cell" href="/proj/${message.projId}" data-type="comment" data-projId="${message.projId}" data-count="${message.count}">
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p有${message.count}人在项目${message.projTitle}中评论/回复了您</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+		    #if($message.type == "content")
+		    	<a class="weui_cell message_cell" href="/proj/${message.projId}" data-type="content" data-count="${message.count}" data-projId="${message.projId}">
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p>项目${message.projTitle}内容已被发起人更新</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+		    #if($message.type == "progress")
+		    	<a class="weui_cell message_cell" href="/proj/${message.projId}" data-type="progress" data-count="${message.count}" data-projId="${message.projId}">
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p>项目${message.projTitle}有了新进度增加</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+			#if($message.type == "redpacket")
+				<a class="weui_cell message_cell" href="/redpacket/$!{userid}" data-type="redpacket" data-count="${message.count}" >
+			    	<div class="weui_cell_bd weui_cell_primary">
+			    	<p>您收到${message.count}个红包</p>
+			    	</div>
+			    	<div class="weui_cell_ft">
+			    	</div>
+			    </a>
+		    #end
+    	#end
+    </div>
+    
+</div>
+
+#parse("/toast.vm")
+#requireModule(['message'])

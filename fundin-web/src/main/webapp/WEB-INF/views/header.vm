@@ -1,0 +1,115 @@
+#macro(setActive $head)
+	#if($navHead == $head)
+		active
+	#end
+#end
+<script>
+	window.loginUserId = "${loginUserId}";
+</script>
+
+<!-- 顶部导航栏 -->
+<div class="nav-header clearfix">
+	<div class="nav-wrap clearfix">
+		<h3 class="logo">
+			<a href="/">
+				<img src="/static/img/logo.png" alt="Fundin">
+			</a>
+		</h3>
+		
+		<div class="navbar">
+			<ul class="nav-left">
+				<li class="#setActive('index')"><a href="/index">首页</a></li>
+				<li class="#setActive('startup')"><a href="/proj/startup">发起项目</a></li>
+				<li class="#setActive('browse')"><a href="/search">浏览项目</a></li>
+				<li class="#setActive('help')"><a href="/help/help">Q & A</a></li>
+			</ul>
+			
+			<div class="nav-right">
+				#if($loginStatus)
+					<div class="fr">
+						<a id="link-logout" href="/logout">退出</a>
+					</div>
+					
+					<a class="nav-message" href="javascript:;">
+						消息<span id="messageCount" class="messageCount">$!{messageCount}</span></a>
+		            <div class="messageDown">
+		            	#foreach($message in $messageList)
+		            		#if($message.type == "attention")
+			            		<a class="nav-message-link" href="/user/${loginUserId}" 
+									target="_blank" data-type="attention" data-count="${message.count}">
+							    	<span>有${message.count}人关注了您</span>
+							    </a>
+						    #end
+						    #if($message.type == "letter")
+			            		<a class="nav-message-link" href="/user/${loginUserId}" 
+									target="_blank" data-type="letter" data-count="${message.count}">
+							    	<span>您有${message.count}封新的站内信</span>
+							    </a>
+						    #end
+						    #if($message.type == "comment")
+			            		<a class="nav-message-link" href="/proj/${message.projId}" target="_blank" 
+			            			data-type="comment" data-projId="${message.projId}"  data-count="${message.count}">
+							    	<span>有${message.count}人在项目${message.projTitle}中评论/回复了您</span>
+							    </a>
+						    #end
+						    #if($message.type == "content")
+			            		<a class="nav-message-link" href="/proj/${message.projId}" target="_blank" 
+			            			data-type="content" data-projId="${message.projId}" data-count="${message.count}">
+							    	<span>项目${message.projTitle}内容已被发起人更新</span>
+							    </a>
+						    #end
+						    #if($message.type == "progress")
+			            		<a class="nav-message-link" href="/proj/${message.projId}" target="_blank" 
+			            			data-type="progress" data-projId="${message.projId}" data-count="${message.count}">
+							    	<span>项目${message.projTitle}有了新进度增加</span>
+							    </a>
+						    #end
+						    #if($message.type == "redpacket")
+			            		<a class="nav-message-link" href="/user/${loginUserId}" target="_blank" 
+			            			data-type="redpacket" data-count="${message.count}">
+							    	<span>您收到${message.count}个红包</span>
+							    </a>
+						    #end
+		            	#end
+		            	
+		            	#if($messageList.size() == 10)
+		            		<a class="nav-message-link" href="/user/${loginUserId}" 
+		            			target="_blank" id="messageAll">
+						    	<span>更多</span>
+						    </a>
+		            	#end
+		            </div>
+		            
+					<a class="nav-user" href="/user/${loginUserId}" target="_blank">
+		                <img id="header-headImg" src="${userHeadImg}">
+		                <span>${userName}</span>
+		            </a>
+		        #else
+					<div class="fr" style="margin-left: 10px;">
+						<a id="link-register" href="javascript:;">注册</a>
+					</div>		        
+		        
+		        	<div class="fr">
+						<a id="link-login" href="javascript:;">登录</a>
+					</div>
+				#end
+				
+				<div class="search fr">
+					<input id="search-input" value="$!navSearch" autocomplete="off"
+						   maxlength="10" placeholder="搜索">
+					<a id="btn-search" href="javascript:void(0);"></a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+#if($!loginFirst)
+	<div id="firstLoginArea" style="position: absolute;z-index: 99;">
+		<div id="firstBlock">
+			<p class="guide">点击它，教你玩转Fundin
+				&nbsp;<a href="javascript:;" id="closeFirst">我知道了</a></p>
+		</div>
+	</div>
+#end

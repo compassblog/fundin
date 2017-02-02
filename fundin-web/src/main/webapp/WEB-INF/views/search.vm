@@ -1,0 +1,98 @@
+#macro(setSubjectChosen $subject)
+	#if($navSubject == $subject)
+		chosen
+	#end
+#end
+
+#macro(setRequireChosen $require)
+	#if($navRequire == $require)
+		chosen
+	#end
+#end
+
+#macro(setLocationChosen $location)
+	#if($navLocation == $location)
+		chosen
+	#end
+#end
+
+<div class="wrapper clearfix">
+	<div class="s-block">
+        <dl style="border-bottom: solid 1px #e5e5e5;">
+	        <dd id="subject">
+		        <a href="javascript:;" class="#setSubjectChosen(0)" data-key="">所有</a>
+		        <a href="javascript:;" class="#setSubjectChosen(1)" data-key="1">个人创意</a>
+		        <a href="javascript:;" class="#setSubjectChosen(2)" data-key="2">社团组织</a>
+		        <a href="javascript:;" class="#setSubjectChosen(3)" data-key="3">校园公益</a>
+		        <a href="javascript:;" class="#setSubjectChosen(4)" data-key="4">创业项目</a>
+		        <a href="javascript:;" class="#setSubjectChosen(10)" data-key="10">明信片大赛</a>
+	        </dd>
+        </dl>
+        <dl style="border-bottom: solid 1px #e5e5e5;">
+	        <dd id="require">
+		        <a href="javascript:;" class="#setRequireChosen('new')" data-key="new">最新上线</a>
+		        <a href="javascript:;" class="#setRequireChosen('hot')" data-key="hot">热门</a>
+		        <a href="javascript:;" class="#setRequireChosen('endsoon')" data-key="endsoon">即将结束</a>
+		        <a href="javascript:;" class="#setRequireChosen('finished')" data-key="finished">已经完成</a>
+	        </dd>
+    	</dl>
+    	<dl>
+    		<dd id="location">
+    			<a href="javascript:;" class="#setLocationChosen('national')" data-key="national">全国</a>
+    			<a href="javascript:;" class="#setLocationChosen('北京')" data-key="北京">北京</a>
+    			<a href="javascript:;" class="#setLocationChosen('上海')" data-key="上海">上海</a>
+    			<a href="javascript:;" class="#setLocationChosen('四川')" data-key="四川">四川</a>
+    			<a href="javascript:;" class="#setLocationChosen('浙江')" data-key="浙江">浙江</a>
+    			<a href="javascript:;" class="#setLocationChosen('江苏')" data-key="江苏">江苏</a>
+    			<a href="javascript:;" class="#setLocationChosen('重庆')" data-key="重庆">重庆</a>
+    			<a href="javascript:;" class="#setLocationChosen('江西')" data-key="江西">江西</a>
+    		</dd>
+    	</dl>
+    </div>
+    
+    #foreach($projView in $projViewList)
+	    <div class="list-item list-search clearfix">
+	        <div class="item-img">
+	            <a href="/proj/${projView.id}" target="_blank"
+	               style="background-image: url(${projView.coverImg})"></a>
+	            <div class="tag">#convertSubject(${projView.subject})</div>
+	        </div>
+	        <div class="item-info">
+	            <p class="title">
+	                <a href="/proj/${projView.id}" target="_blank">${projView.title}</a>
+	            </p>
+	            <p class="intro">${projView.intro}</p>
+	            <div class="infos" style="width: 690px;">
+	                <div class="fl">
+	                    <p>
+	                        <a href="/user/${projView.userId}" target="_blank">
+	                            <img src="${projView.userHeadImg}">${projView.userName}</a>
+	                        <span>${projView.time}</span>
+	                    </p>
+	                </div>
+	                <div class="fr">
+	                    <p>
+                            #set($ratio = $projView.raisedRatio * 100)
+							#set($ratio = $numberTool.integer($ratio))
+                            <span>进度 $ratio%</span>
+                            
+                            #if(${projView.status} == 3 || ${projView.status} == 4)
+								<span>众筹结束</span>
+							#else
+                            	<span>剩余 $!{projView.restTime}</span>
+                            #end
+                        </p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    #end
+    
+    #if($projViewList.size() == 0)
+    	<div style="text-align: center;font-size: 14px;margin-bottom: 60px;">
+    		没有找到相关结果
+    	</div>
+    #end
+</div>
+
+<script type="text/javascript" src="/static/js/search.js"></script>

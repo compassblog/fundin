@@ -1,0 +1,130 @@
+<div class="container" style="margin-bottom: 70px;">
+	<div class="weui_panel weui_panel_access user_panel">
+        <div class="weui_panel_bd">
+            <a href="#getLink($!me, '/profile')" class="weui_media_box weui_media_appmsg">
+                <div class="weui_media_hd">
+                	<img class="weui_media_appmsg_thumb" src="$!{user.headImg}">
+                </div>
+                <div class="weui_media_bd">
+                    <h4 class="weui_media_title">$!{user.name}</h4>
+                    #if($!{user.type} == 0)
+	                    <p class="weui_media_desc">
+	                    	<span>#getSex($!{user.sex})</span>
+	                    	<span>$!{constellation}</span>
+	                    	#if($!{user.entryYear})
+	                    		<span>$!{user.entryYear}级</span>
+	                    	#end
+	                    </p>
+	                    <p class="weui_media_desc">
+	                    	<span>$!{schoolModel.province}</span>
+							<span>$!{schoolModel.univ}</span>
+							<span>$!{schoolModel.school}</span>
+	                    </p>
+                    #else
+                    	#if($!{user.birthday})
+	                    	<p class="weui_media_desc">
+		                    	<span>创建于$!{user.birthday}年</span>
+		                    </p>
+	                    #end
+	                    <p class="weui_media_desc">
+	                    	<span>$!{schoolModel.province}</span>
+							<span>$!{schoolModel.univ}</span>
+	                    </p>
+                    #end
+                </div>
+                #if($!me)
+                	<span class="weui_cell_ft"></span>
+                #end
+            </a>
+        </div>
+    </div>
+    
+    #if($!me)
+    	<div class="weui_cells weui_cells_access">
+    		<a class="weui_cell" href="/message">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <p>消息</p>
+	            </div>
+	            <div class="weui_cell_ft">$!{messageCount}条新消息</div>
+	        </a>
+	        <a class="weui_cell" href="/letter/$!{user.id}">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <p>站内信</p>
+	            </div>
+	            <div class="weui_cell_ft">
+	            </div>
+	        </a>
+	        <a class="weui_cell" href="/redpacket/$!{user.id}">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <p>我的红包</p>
+	            </div>
+	            <div class="weui_cell_ft">
+	            </div>
+	        </a>
+        </div>
+    #end
+    
+    <div class="weui_cells weui_cells_access">
+        <a class="weui_cell" href="/myPro/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>发起的项目</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a class="weui_cell" href="/supportPro/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>支持的项目</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a class="weui_cell" href="/followPro/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>关注的项目</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    
+    <div class="weui_cells weui_cells_access">
+        <a class="weui_cell" href="/myAtten/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>$!{person}关注的人</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a class="weui_cell" href="/beAtten/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>关注$!{person}的人</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a class="weui_cell" href="/invite/$!{user.id}">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>$!{person}邀请的人</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    
+    <div class="weui_cells weui_cells_access">
+    	<a class="weui_cell" href="/account">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>我的账户</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    
+    <div class="weui_cells weui_cells_access">
+    	<a class="weui_btn weui_btn_warn" href="/logout">退出登陆</a>
+    </div>
+</div>
+
+#parse("/tabbar.vm")

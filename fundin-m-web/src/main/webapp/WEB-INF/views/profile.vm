@@ -1,0 +1,246 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">我的资料</p>
+</header>
+<p id="userid" style="display: none">$!{user.id}</p>
+<div class="container" style="margin-top: 50px;">
+	<div class="weui_cells">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>名称</p>
+            </div>
+            <div class="weui_cell_ft">$!{user.name}</div>
+        </div>
+    </div>
+    
+    <div class="weui_cells weui_cells_access">
+    	<a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-icon')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>修改头像</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    	<a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-sign')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>个性签名</p>
+            </div>
+            <div class="weui_cell_ft" id="a-sign" 
+            	data-sign="$!{user.sign}">$!stringTool.cutString($!{user.sign})</div>
+        </a>
+        #if($!{user.type} == 0)
+	        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-sex')">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <p>性别</p>
+	            </div>
+	            <div class="weui_cell_ft" id="a-sex">#getSex($!{user.sex})</div>
+	        </a>
+        #end
+        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-birthday')">
+            <div class="weui_cell_bd weui_cell_primary">
+            	#if($!{user.type} == 0)
+                	<p>生日</p>
+                #else
+                	<p>创建年份</p>
+                #end
+            </div>
+            <div class="weui_cell_ft" id="a-birthday">$!{user.birthday}</div>
+        </a>
+        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-school')">
+            <div class="weui_cell_bd weui_cell_primary">
+            	<p>学校</p>
+            </div>
+            <div class="weui_cell_ft" id="a-school">$!{schoolModel.univ}</div>
+        </a>
+        #if($!{user.type} == 0)
+	        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-entryYear')">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <p>入学年份</p>
+	            </div>
+	            <div class="weui_cell_ft" id="a-entryYear">$!{user.entryYear}</div>
+	        </a>
+        #end
+    </div>
+    
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-sign" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑个性签名</strong></div>
+        <div class="weui_cells weui_cells_form">
+	        <div class="weui_cell">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <input class="weui_input" type="text" maxlength="20"
+	                	id="sign-text" value="$!{user.sign}">
+	            </div>
+	        </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-sign">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-icon" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">上传头像</strong></div>
+        <div class="weui_uploader">
+        	<div class="weui_uploader_hd weui_cell">
+        		<div class="weui_cell_bd weui_cell_primary">选择图片上传</div>
+            	<div class="weui_cell_ft"></div>
+            </div>
+            <div class="weui_uploader_bd">
+            	<ul class="weui_uploader_files">
+                    <li id="icon-preview" class="weui_uploader_file" style="background-image:url($!{user.headImg})"></li>
+            	</ul>
+            	<form id="icon-form" enctype="multipart/form-data" method="post">
+            	<div class="weui_uploader_input_wrp">
+                	<input id="icon-input" class="weui_uploader_input" name="imgFile" type="file" accept="image/*" multiple="multiple" />
+                </div>
+                </form>
+            </div>
+        	
+        </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-icon">确定</a>
+        </div>
+    </div>
+</div>
+
+#if($!{user.type} == 0)
+	<div class="weui_dialog_confirm" id="dialog-sex" style="display: none;">
+	    <div class="weui_mask"></div>
+	    <div class="weui_dialog">
+	        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑性别</strong></div>
+	        <div class="weui_cells weui_cells_form">
+	            <div class="weui_cell_primary">
+			        <select class="weui_select" name="sex-select">
+			            <option value="0" #if($!{user.sex} == 0)selected#end>男</option>
+			            <option value="1" #if($!{user.sex} == 1)selected#end>女</option>
+			        </select>
+	            </div>
+		    </div>
+	        <div class="weui_dialog_ft">
+	            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+	            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-sex">确定</a>
+	        </div>
+	    </div>
+	</div>
+#end
+
+#if($!{user.type} == 0)
+	<div class="weui_dialog_confirm" id="dialog-birthday" style="display: none;">
+	    <div class="weui_mask"></div>
+	    <div class="weui_dialog">
+	        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑生日</strong></div>
+	        <div class="weui_cells weui_cells_form multi-cells">
+	            <div class="weui_cell_primary select_cell">
+			        <select class="weui_select" id="yearSelect">
+			        	#foreach($year in [1980..2010])
+		            		<option>$year</option>
+		            	#end
+			        </select>
+	            </div>
+	            <div class="weui_cell_primary select_cell">
+			        <select class="weui_select" id="monthSelect">
+			        	#foreach($month in [1..12])
+		            		<option>$month</option>
+		            	#end
+			        </select>
+	            </div>
+	            <div class="weui_cell_primary">
+			        <select class="weui_select" id="daySelect">
+			        	#foreach($day in [1..31])
+		            		<option>$day</option>
+		            	#end
+			        </select>
+	            </div>
+		    </div>
+	        <div class="weui_dialog_ft">
+	            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+	            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-birthday">确定</a>
+	        </div>
+	    </div>
+	</div>
+#else
+	<div class="weui_dialog_confirm" id="dialog-birthday" style="display: none;">
+	    <div class="weui_mask"></div>
+	    <div class="weui_dialog">
+	        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑创建年份</strong></div>
+	        <div class="weui_cells weui_cells_form">
+	            <div class="weui_cell_primary">
+			        <select class="weui_select" id="yearSelect">
+			        	#foreach($year in [1990..2016])
+		            		<option>$year</option>
+		            	#end
+			        </select>
+	            </div>
+		    </div>
+	        <div class="weui_dialog_ft">
+	            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+	            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-birthday">确定</a>
+	        </div>
+	    </div>
+	</div>
+#end
+
+<div class="weui_dialog_confirm" id="dialog-school" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑学校</strong></div>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell_primary">
+		        <select class="weui_select" id="provinceSelect"></select>
+            </div>
+            <div class="weui_cell_primary">
+		        <select class="weui_select" id="citySelect"></select>
+            </div>
+            <div class="weui_cell_primary">
+		        <select class="weui_select" id="univSelect"></select>
+            </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-school">确定</a>
+        </div>
+    </div>
+</div>
+
+#if($!{user.type} == 0)
+	<div class="weui_dialog_confirm" id="dialog-entryYear" style="display: none;">
+	    <div class="weui_mask"></div>
+	    <div class="weui_dialog">
+	        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑入学年份</strong></div>
+	        <div class="weui_cells weui_cells_form">
+	            <div class="weui_cell_primary">
+			        <select class="weui_select" name="entry-select" id="entrySelect">
+			            #foreach($entry in [2000..2016])
+		            		<option>$entry</option>
+		            	#end
+			        </select>
+	            </div>
+		    </div>
+	        <div class="weui_dialog_ft">
+	            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+	            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-entryYear">确定</a>
+	        </div>
+	    </div>
+	</div>
+#end
+
+<script>
+	var entryYearData = "$!{user.entryYear}";
+	var birthdayData = "$!{user.birthday}";
+	var schoolModel = {
+		"id": "$!{schoolModel.id}",
+		"province": "$!{schoolModel.province}",
+		"univ": "$!{schoolModel.univ}",
+		"school": "$!{schoolModel.school}"
+	};
+</script>
+#parse("/toast.vm")
+#requireModule(['profile'])

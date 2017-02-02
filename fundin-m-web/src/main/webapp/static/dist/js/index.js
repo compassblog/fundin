@@ -1,0 +1,1 @@
+"use strict";define(["Zepto"],function(a){a("#select-subject, #select-require, #select-location").on("change",function(){var b=a("#select-subject").find("option:selected").val(),c=a("#select-require").find("option:selected").val(),d=a("#select-location").find("option:selected").val();window.location.href="/index?subject="+b+"&require="+c+"&location="+d})});

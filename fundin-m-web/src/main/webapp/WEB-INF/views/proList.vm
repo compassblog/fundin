@@ -1,0 +1,45 @@
+#if ($!projViewList && $!projViewList.size() > 0)
+    <div class="panel_list">
+    	#foreach ($projView in $projViewList)
+		    <div class="weui_panel weui_panel_access">
+		        <div class="weui_panel_hd">
+		        	<a class="pannel_head" href="/user/$projView.userId">
+		        		<img src="$projView.userHeadImg">
+		        		<span>$projView.userName</span>
+		        	</a>
+		        	<span class="time-tip">$projView.time</span>
+		        </div>
+		        <div class="weui_panel_bd">
+		            <a href="/proj/$projView.id" class="weui_media_box weui_media_appmsg">
+		                <div class="weui_media_hd">
+		                    <img class="weui_media_appmsg_thumb" src="$projView.coverImg">
+	                    </div>
+		                <div class="weui_media_bd">
+		                    <h4 class="weui_media_title">$projView.title</h4>
+		                    <p class="weui_media_desc">$projView.intro</p>
+		                </div>
+		            </a>
+		        </div>
+		        <div class="weui_media_box weui_media_text">
+			        <ul class="weui_media_info">
+			            <li class="weui_media_info_meta" style="padding-left: 1em;">目标<b>$projView.totalAmount</b>元</li>
+			            <li class="weui_media_info_meta weui_media_info_meta_extra">已筹<b>$projView.raisedAmount</b>元</li>
+			            #if($projView.status == 3)
+							<li class="weui_media_info_meta weui_media_info_meta_extra"><b>众筹成功</b></li>
+						#elseif($projView.status == 4)
+							<li class="weui_media_info_meta weui_media_info_meta_extra">众筹失败</li>
+						#else
+                        	<li class="weui_media_info_meta weui_media_info_meta_extra">剩余$projView.restTime</li>
+                        #end
+			        </ul>
+		        </div>
+		    </div>
+	    #end
+    </div>
+#else
+	<div class="panel_list panel">
+		<div class="hd">
+		    <h1 class="page_title">暂无数据...</h1>
+		</div>
+	</div>
+#end

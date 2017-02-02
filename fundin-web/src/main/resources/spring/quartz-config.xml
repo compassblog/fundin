@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" >
+	
+	<bean id="jobScheduler" autowire="no" lazy-init="false"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+		<property name="triggers">
+			<list>
+				<ref bean="updateProjStatusJobTrigger" />
+				<ref bean="cleanImageFileJobTrigger" />
+			</list>
+		</property>
+	</bean>
+    
+	<!-- UpdateProjStatusJob -->
+    <bean id="updateProjStatusJobTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" >
+		<property name="jobDetail">
+            <ref bean="updateProjStatusJobDetail" />
+        </property>
+       	<property name="cronExpression" value="0 */10 * * * ?" />
+       	<property name="name" value="updateProjStatusJobTrigger" />
+    </bean>
+    
+    <bean id="updateProjStatusJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" >
+        <property name="targetObject" ref="updateProjStatusJob" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="true" />
+    </bean>
+    
+    <bean id="updateProjStatusJob" class="com.fundin.service.job.UpdateProjStatusJob"/>
+    
+    <!-- CleanImageFileJob -->
+    <bean id="cleanImageFileJobTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" >
+		<property name="jobDetail">
+            <ref bean="cleanImageFileJobDetail" />
+        </property>
+       	<property name="cronExpression" value="0 0 */1 * * ?" />
+       	<property name="name" value="cleanImageFileJobTrigger" />
+    </bean>
+    
+    <bean id="cleanImageFileJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" >
+        <property name="targetObject" ref="cleanImageFileJob" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="true" />
+    </bean>
+    
+    <bean id="cleanImageFileJob" class="com.fundin.service.job.CleanImageFileJob"/>
+    
+</beans>

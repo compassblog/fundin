@@ -1,0 +1,133 @@
+<header class="top_bar">
+	<a class="bar_back" href="javascript:;" onclick="history.back()"></a>
+	<p class="bar_title">我的账户</p>
+</header>
+<div class="container" style="margin-top: 50px;">
+    
+    <div class="weui_cells weui_cells_access">
+    	<a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-phone')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>电话</p>
+            </div>
+            <div class="weui_cell_ft" id="a-phone">$!{user.phone}</div>
+        </a>
+        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-bankAccount')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>银行账号</p>
+            </div>
+            <div class="weui_cell_ft" id="a-bankAccount">$!{user.bankAccount}</div>
+        </a>
+        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-bankName')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>开户行名称</p>
+            </div>
+            <div class="weui_cell_ft" id="a-bankName">$!{user.bankName}</div>
+        </a>
+        <a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-bankUserName')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>开户人姓名</p>
+            </div>
+            <div class="weui_cell_ft" id="a-bankUserName">$!{user.bankUserName}</div>
+        </a>
+    </div>
+    
+    <div class="weui_cells weui_cells_access">
+    	<a class="weui_cell" href="javascript:;" onclick="showDialog('dialog-withdraw')">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>申请提现</p>
+            </div>
+            <div class="weui_cell_ft"></div>
+        </a>
+        
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-phone" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑电话</strong></div>
+        <div class="weui_cells weui_cells_form">
+	        <div class="weui_cell">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <input class="weui_input" type="tel" maxlength="11"
+	                	id="phone-text" value="$!{user.phone}">
+	            </div>
+	        </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-phone">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-bankAccount" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑银行账号</strong></div>
+        <div class="weui_cells weui_cells_form">
+	        <div class="weui_cell">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <input class="weui_input" type="text"
+	                	id="bankAccount-text" value="$!{user.bankAccount}">
+	            </div>
+	        </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-bankAccount">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-bankName" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑开户行名称</strong></div>
+        <div class="weui_cells weui_cells_form">
+	        <div class="weui_cell">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <input class="weui_input" type="text"
+	                	id="bankName-text" value="$!{user.bankName}">
+	            </div>
+	        </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-bankName">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="dialog-bankUserName" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">编辑开户人姓名</strong></div>
+        <div class="weui_cells weui_cells_form">
+	        <div class="weui_cell">
+	            <div class="weui_cell_bd weui_cell_primary">
+	                <input class="weui_input" type="text"
+	                	id="bankUserName-text" value="$!{user.bankUserName}">
+	            </div>
+	        </div>
+	    </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" onclick="cancleDialog(this)">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" id="btn-bankUserName">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_alert" id="dialog-withdraw" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">申请提现</strong></div>
+        <div class="weui_dialog_bd">您已成功提交提现申请，预计3～7日到账</div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary" onclick="cancleDialog(this)" id="btn-withdraw">确定</a>
+        </div>
+    </div>
+</div>
+
+#parse("/toast.vm")
+#requireModule(['profile'])

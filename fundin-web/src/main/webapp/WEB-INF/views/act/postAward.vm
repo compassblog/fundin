@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="/static/css/fullPage.css">
+<script type="text/javascript" src="/static/js/lib/fullPage.min.js"></script>
+<link rel="stylesheet" href="/static/css/video-js.min.css">
+<script type="text/javascript" src="/static/js/lib/video.min.js"></script>
+
+<div id="postAward">
+    <div class="section">
+    	<div class="poster">
+    	</div>
+    </div>
+    <div class="section">
+		<div class="post">
+			<a class="post-item" href="/user/150" target="_blank">
+				<img src="http://img.fundin.cn/fundin/image/5407620160526092953.jpg">
+				<span>凌瑞富</span>
+			</a>
+			<span class="post-title">最佳众趣互动奖</span>
+			<a class="post-link" href="/proj/19" target="_blank">
+				<img class="post-image" src="http://img.fundin.cn/fundin/image/17211520160526105231.jpg">
+			</a>
+			<video id="lrf_video" class="video-js vjs-default-skin" 
+				controls preload="auto" width="400" height="200">
+				<source src="http://img.fundin.cn/fundin/video/lrf.mp4" type="video/mp4"/>
+        	</video>
+	        <!--
+				<div style="display:inline-block;width:400px;height:200px;vertical-align:middle;">
+					<object width="100%" height="100%" align="top" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0">
+						<param value="http://static.video.qq.com/TPout.swf?vid=z0306ncv84o&auto=0" name="video">
+						<param value="high" name="quality">
+						<param value="transparent" name="wmode">
+						<param value="true" name="allowFullScreen">
+						<param value="never" name="allowScriptAccess">
+						<embed width="100%" height="100%" align="top" pluginspage="http://www.macromedia.com/go/getflashplayer" 
+							type="application/x-shockwave-flash" allowscriptaccess="never" allowfullscreen="true" 
+							wmode="transparent" swliveconnect="true" quality="high" allownetworking="all" 
+							src="http://static.video.qq.com/TPout.swf?vid=z0306ncv84o&auto=0">
+					</object>
+				</div>
+			-->
+		</div>
+		<div class="award">
+			<img class="award-image" src="/static/img/act/a1.jpg">
+			<img class="award-image" src="/static/img/act/a2.jpg">
+			<img class="award-image" src="/static/img/act/a3.jpg">
+			<img class="award-image" src="/static/img/act/a4.jpg">
+		</div>
+		<hr/>
+    </div>
+    <div class="section">
+    	<div class="post">
+			<a class="post-item" href="/user/193" target="_blank">
+				<img src="http://img.fundin.cn/fundin/image/88650020160529173738.jpg">
+				<span>戚静</span>
+			</a>
+			<span class="post-title">最佳众趣设计奖</span>
+			<a class="post-link" href="/proj/24" target="_blank">
+				<img class="post-image" src="http://img.fundin.cn/fundin/image/61355920160530124953.jpg">
+			</a>
+		</div>
+		<div class="award">
+			<img class="award-image" src="/static/img/act/c1.jpg">
+			<img class="award-image" src="/static/img/act/c2.jpg">
+			<img class="award-image" src="/static/img/act/c3.jpg">
+		</div>
+		<hr/>
+    </div>
+    <div class="section">
+    	<div class="post">
+			<a class="post-item" href="/user/152" target="_blank">
+				<img src="http://img.fundin.cn/fundin/image/46175920160526232906.jpg">
+				<span>张玲</span>
+			</a>
+			<span class="post-title">最佳众趣理念奖</span>
+			<a class="post-link" href="/proj/22" target="_blank">
+				<img class="post-image" src="http://img.fundin.cn/fundin/image/33793120160526232406.jpg">
+			</a>
+	        <video controls="controls" preload="auto" name="media">
+	        	<source src="http://img.fundin.cn/fundin/video/zhangling.m4a" type="audio/x-m4a">
+	        </video>
+		</div>
+		<div class="award">
+			<img class="award-image" src="/static/img/act/b1.jpg">
+			<img class="award-image" src="/static/img/act/b2.jpg">
+			<img class="award-image" src="/static/img/act/b3.jpg">
+			<img class="award-image" src="/static/img/act/b4.jpg">
+		</div>
+    </div>
+</div>
+
+<script>
+	$("#postAward").fullpage({
+		anchors: ['page1', 'page2', 'page3', 'page4'],
+		navigation: true,
+		navigationPosition: 'right',
+		onLeave: function(index, nextIndex, direction){
+			if (direction == 'down') {
+				$(".nav-header").animate({"margin-top": "-48px"}, 500);
+			}
+			if (direction == 'up') {
+				$(".nav-header").animate({"margin-top": "0px"}, 500);
+			}
+		}
+	});
+	//videojs('lrf_video');
+</script>

@@ -1,0 +1,594 @@
+<div class="wrapper clearfix">
+	<div class="user-area clearfix">
+		<div class="user-info">
+    		<img src="${user.headImg}" id="headImg">
+    	</div>
+    	
+    	<p class="user-info">${user.name}</p>
+    	
+    	#if($!loginStatus)
+	    	<form id="headForm" method="post" enctype="multipart/form-data">
+		    	<p class="user-info">
+		    		#if($canEdit)
+			    		<a href="javascript:;" id="editHead">
+		        			<input type="file" id="headInput" multiple="multiple" name="imgFile" 
+		               			accept="image/jpg,image/gif,image/png,image/jpeg">更改头像</a>
+			    		<span>|</span>
+			    		<a href="javascript:;" id="editInfo">编辑资料</a>
+			    		<span>|</span>
+			    		<a href="javascript:;" id="redPacketInfo">我的红包</a>
+		    		#else
+		    			#if(!${hasAttention})
+							<input type="button" class="attention-btn" 
+								id="attention-link" value="关注"/>
+						#else
+							<input type="button" class="attention-btn" 
+								id="cancle-attention-link" value="取消关注"/>
+						#end
+		    		#end
+		    	</p>
+	    	</form>
+    	#end
+    	
+    	#if(${user.sex})
+	    	<p class="user-info">
+	    		<span>
+	    			#if(${user.sex} == 0)
+						男
+					#else
+						女
+					#end
+				</span>
+				<span>$!{constellation}</span>
+				<span>$!{schoolModel.province}</span>
+				<span>$!{schoolModel.univ}</span>
+				<span>$!{schoolModel.school}</span>
+				<span>$!{user.entryYear}级</span>
+				
+				#if($canEdit)
+					<span>账户： ￥$!{user.withdrawalAmount}</span>
+					<a href="javascript:;" id="requestMoney">提现</a>
+				#end
+	    	</p>
+    	#end
+    	
+    	#if(${user.sign})
+	    	<p class="user-info">
+				<span>个性签名： $!{user.sign}</span>
+	    	</p>
+    	#end
+	</div>
+	
+	#if($canEdit)
+		<div class="info-block" id="editBlock">
+			<div class="info-h">
+				<span>编辑资料</span>
+				<i class="icon-remove" id="removeEdit"></i>
+			</div>
+			
+			<div class="info-split">
+				<span class="split-btn selected" content-id="1">个人信息</span>
+				<span class="split-btn" content-id="2">账户信息</span>
+				<span class="split-btn" content-id="3">密码更改</span>
+			</div>
+			
+			<div class="info-content" id="content-1">
+				<div class="form-item">
+		            <label class="label"><span class="text-red">*</span>个性签名</label>
+		            <input class="text" type="text" id="signInput" 
+		            	style="width: 360px;" maxlength="20" value="$!{user.sign}">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>联系电话</label>
+		            <input class="text" type="text" id="phoneInput" 
+		            	style="width: 360px;" maxlength="11" value="$!{user.phone}">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>性别</label>
+		            <input type="radio" name="sexRadio" id="sex0" value="0" checked="checked"/>
+		            <label class="forRadio" for="sex0">男</label>
+		            <input type="radio" name="sexRadio" id="sex1" value="1"/>
+		            <label class="forRadio" for="sex1">女</label>
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>生日</label>
+		            <div id="birthdayInput">
+			            <select id="yearSelect">
+			            	#foreach($year in [1980..2010])
+			            		<option>$year</option>
+			            	#end
+			            </select>
+			            <select id="monthSelect">
+			            	#foreach($month in [1..12])
+			            		<option>$month</option>
+			            	#end
+			            </select>
+			            <select id="daySelect">
+			            	#foreach($day in [1..31])
+			            		<option>$day</option>
+			            	#end
+			            </select>
+		            </div>
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>学校</label>
+		        	<div id="univInput">
+			            <select id="provinceSelect"></select>
+			            <select id="citySelect"></select>
+			            <select id="univSelect"></select>
+			        </div>
+		        </div>
+		        
+    			<div class="form-item">
+		            <label class="label"><span class="text-red">*</span>入学年份</label>
+		        	<div id="entryInput">
+			            <select id="entrySelect">
+			            	#foreach($entry in [2000..2016])
+			            		<option>$entry</option>
+			            	#end
+			            </select>
+		        	</div>
+		        </div>
+		        
+		        <input id="updatePersonalBtn" type="button" class="info-btn" value="保存">
+			</div>
+			
+			<div class="info-content" id="content-2" style="display: none;">
+			
+				<label class="label">已众筹金额 <span style="color:#f00;">¥$!{user.raisedAmount}</span></label>
+				<div class="account-info">
+					<label class="infoSpan" >可提现金额 <span class="info-red">¥$!{user.withdrawalAmount}</span></label>
+					<label class="infoSpan" >保证金金额 <span class="info-red">¥$!{user.depositAmount}</span></label>
+					<label class="infoSpan" >第三方支付渠道交易费 <span class="info-red">¥$!{user.transactionAmount}</span></label>
+				</div>
+				<br/>
+				<label class="head-label">提现银行信息</label>
+				<div class="form-item">
+		            <label class="label"><span class="text-red">*</span>银行账号</label>
+		            <input class="text" type="text" id="bankAccountInput" 
+		            	style="width: 360px;"  value="$!{user.bankAccount}">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>开户行名称</label>
+		            <input class="text" type="text" id="bankNameInput" 
+		            	style="width: 360px;"  value="$!{user.bankName}">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>开户人姓名</label>
+		            <input class="text" type="text" id="bankUserNameInput" 
+		            	style="width: 360px;"  value="$!{user.bankUserName}">
+		        </div>
+		        
+		        <input id="updateBankAccountBtn" type="button" class="info-btn" value="保存">
+		        
+			</div>
+			
+			<div class="info-content" id="content-3" style="display: none;">
+				<div class="form-item">
+		            <label class="label"><span class="text-red">*</span>旧密码</label>
+		            <input class="text" type="password" id="oldPasswdInput" 
+		            	style="width: 360px;" maxlength="25">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>新密码</label>
+		            <input class="text" type="password" id="newPasswdInput" 
+		            	style="width: 360px;" maxlength="25">
+		        </div>
+		        
+		        <div class="form-item">
+		            <label class="label"><span class="text-red">*</span>确认新密码</label>
+		            <input class="text" type="password" id="newPasswdComfirmInput" 
+		            	style="width: 360px;" maxlength="25">
+		        </div>
+		        
+		        <input id="updatePasswdBtn" type="button" class="info-btn" value="保存">
+			</div>
+			
+		</div>
+	#end
+	
+	#if($canEdit)
+		<div class="info-block" id="myRedPacket">
+			<div class="info-h">
+				<span>我的红包</span>
+				<i class="icon-remove" id="removeEdit"></i>
+			</div>
+			#if($redPacketList.size()>0)
+			#foreach($redPacket in $redPacketList)
+			<div class="account-info" style="text-align: center;">
+				<label class="infoSpan" >${redPacket.typeName}</label>
+				<label class="infoSpan" ><span class="info-red">${redPacket.amount}元</span>&nbsp;&nbsp;×&nbsp;&nbsp;${redPacket.count}</label>
+				<label class="infoSpan" >${redPacket.beginTimeStr}至${redPacket.endTimeStr}</label>
+			</div>
+			#end
+			#else
+			<div class="account-info">
+				<label class="infoSpan" ><span class="info-red">抱歉，沒有可用的红包！</span></label>
+			</div>
+			#end
+		</div>
+	#end
+	
+	#if($canEdit)
+		<div class="info-block" id="accountConfirmBlock">
+			<div class="info-h">
+				<span>确认账户信息</span>
+				<i class="icon-remove" id="removeEdit"></i>
+			</div>
+			
+			<div class="info-content" id="accountConfirmInfo">
+				<div class="info-item">
+					<label class="smallInfoSpan" >联系电话  </label>
+					<label class="longInfoSpan">$!{user.phone}</label>
+				</div>
+				<div class="info-item">
+					<label class="smallInfoSpan" >可提现金额  </label>
+					<label class="longInfoSpan">$!{user.withdrawalAmount}元</label>
+				</div>
+				<br/>
+				<label class="head-label">提现银行信息</label>
+				<br/>
+				<div class="info-item">
+					<label class="smallInfoSpan" >银行账号  </label>
+					<label class="longInfoSpan">$!{user.bankAccount}</label>
+				</div>
+				<div class="info-item">
+					<label class="smallInfoSpan" >开户行名称  </label>
+					<label class="longInfoSpan">$!{user.bankName}</label>
+				</div>
+				<div class="info-item">
+				<label class="smallInfoSpan" >开户人姓名  </label>
+				<label class="longInfoSpan">$!{user.bankUserName}</label>
+				</div>
+				
+				 <input id="applyWithdrawalBtn" type="button" class="info-btn" value="申请提现">
+			</div>
+			
+		</div>
+	#end
+	
+	<div class="center-line"></div>
+	
+	<div class="user-item clearfix">
+		#if($canEdit)
+    		<div class="c-box toleft">
+    			<h3 class="c-h3">站内信 ($letterList.count)</h3>
+    			<div class="c-body">
+    				#if($letterList.count == 0)
+    					<p class="no-count">您还没有站内信</p>
+    				#end
+    				#foreach($letter in $letterList.elements)
+	    				<a class="letter" href="javascript:;" data-content="${letter.content}">
+	    					<span class="letter-time">${letter.timeStr}</span>
+	    					<span class="letter-title">${letter.title}</span>
+	    				</a>
+    				#end
+    			</div>
+    			#if($letterList.count != 0)
+	    			<p class="c-page clearfix">
+	    				<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+	    				<span class="page-span" id="pageNum">1</span>
+	    				<span class="page-span"> / </span>
+	    				<span class="page-span" id="pageCount">$letterList.pageCount</span>
+	    				<a href="javascript:;" class="page-link" id="next">&gt;</a>
+	    				<span style="display: none;" id="pageInfo" data-page-size="$letterList.pageSize" 
+	    					data-tmpl="letter-tmpl" data-ajax="getLetterList"></span>
+	    			</p>
+    			#end
+    		</div>
+    		
+    		<div class="info-block" id="letterBlock" style="left: 32%;top: 32%">
+				<div class="info-h">
+					<span id="letter-title"></span>
+					<i class="icon-remove"></i>
+				</div>
+				<div class="info-content">
+					<div id="letter-content" class="letter-content"></div>
+				</div>
+			</div>
+		#end
+	</div>
+	
+	<script id="letter-tmpl" type="text/html">
+		{{each(idx, letter) dataList}}
+			<a class="letter" href="javascript:;" data-content="${letter.content}">
+	    		<span class="letter-time">${letter.timeStr}</span>
+	    		<span class="letter-title">${letter.title}</span>
+	    	</a>
+		{{/each}}
+	</script>
+	
+	<div class="user-item clearfix">
+		<div class="c-box toright">
+			<h3 class="c-h3">
+				${person}发起的项目 ($myProjList.count)
+			</h3>
+			<div class="c-body">
+				#if($myProjList.count == 0)
+					#if($canEdit)
+						<p class="no-count">您还没有发起的项目，快去点击“发起项目”试试吧！</p>
+					#else
+						<p class="no-count">${person}还没有发起的项目</p>
+					#end
+				#end
+				
+				#foreach($myProj in $myProjList.elements)
+					#if($myProj.status != 1)
+	    				<p class="p-info">
+				        	<a href="/proj/${myProj.id}" target="_blank" class="a-info">
+				        		<img class="img-info" src="${myProj.coverImg}"/>
+				        		#if($myProj.status == 2)
+				        		<span class="span-info">${myProj.title} (众筹中)</span>
+				        		#elseif($myProj.status == 3)
+				        		<span class="span-info">${myProj.title} (众筹成功)</span>
+				        		#elseif($myProj.status == 4)
+				        		<span class="span-info">${myProj.title} (众筹失败)</span>
+				        		#end
+				        	</a>
+			         		#if(${canEdit})
+			         			#if($myProj.subject == 10)
+		                			<a href="/postEdit/${myProj.id}" target="_blank" class="p-edit">编辑</a>
+		            			#else
+		            				<a href="/projEdit/${myProj.id}" target="_blank" class="p-edit">编辑</a>
+		            			#end
+		            		#end
+			        	</p>
+			        #elseif($myProj.status == 1)
+			        	<p class="p-info">
+			        		<span class="a-info">
+				        		<img class="img-info" src="${myProj.coverImg}"/>
+				        		<span class="span-info">${myProj.title} (审核中)</span>
+				        	</span>
+			        	</p>
+			        
+			        #end
+				#end
+			</div>
+			
+			#if($myProjList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">$myProjList.pageCount</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$myProjList.pageSize" 
+    					data-tmpl="myProj-tmpl" data-ajax="getMyProjList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<script id="myProj-tmpl" type="text/html">
+		{{each(idx, myProj) dataList}}
+			{{if myProj.status != 1}}
+				<p class="p-info">
+					<a href="/proj/${myProj.id}" target="_blank" class="a-info">
+						<img class="img-info" src="${myProj.coverImg}"/>
+						{{if myProj.status == 2}}
+						<span class="span-info">${myProj.title} (众筹中)</span>
+						{{/if}}
+						{{if myProj.status == 3}}
+						<span class="span-info">${myProj.title} (众筹成功)</span>
+						{{/if}}
+						{{if myProj.status == 4}}
+						<span class="span-info">${myProj.title} (众筹失败)</span>
+						{{/if}}
+					</a>
+			    	{{if ${canEdit} == 1}}
+		        		<a href="/projEdit/${myProj.id}" target="_blank" class="p-edit">编辑</a>
+		        	{{/if}}
+			    </p>
+			{{/if}}
+			{{if myProj.status == 1}}
+				<p class="p-info">
+		        		<span class="a-info">
+			        		<img class="img-info" src="${myProj.coverImg}"/>
+			        		<span class="span-info">${myProj.title} (审核中)</span>
+			        	</span>
+			    </p>
+			{{/if}}
+		{{/each}}
+	</script>
+	
+	<div class="user-item clearfix">
+		<div class="c-box toleft">
+			<h3 class="c-h3">
+				${person}支持的项目 ($mySupportList.count)
+			</h3>
+			<div class="c-body">
+				#if($mySupportList.count == 0)
+					#if($canEdit)
+						<p class="no-count">您还没有支持的项目，快去支持自己感兴趣的项目吧！</p>
+					#else
+						<p class="no-count">${person}还没有支持的项目</p>
+					#end
+				#end
+				
+				#foreach($mySupport in $mySupportList.elements)
+    				<p class="p-info">
+			        	<a href="/proj/${mySupport.id}" target="_blank" class="a-info">
+			        		<img class="img-info" src="${mySupport.coverImg}"/>
+			        		<span class="span-info">${mySupport.title}</span>
+			        	</a>
+		        	</p>
+				#end
+			</div>
+			
+			#if($mySupportList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">$mySupportList.pageCount</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$mySupportList.pageSize" 
+    					data-tmpl="mySupport-tmpl" data-ajax="getMySupportList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<script id="mySupport-tmpl" type="text/html">
+		{{each(idx, mySupport) dataList}}
+			<p class="p-info">
+				<a href="/proj/${mySupport.id}" target="_blank" class="a-info">
+					<img class="img-info" src="${mySupport.coverImg}"/>
+					<span class="span-info">${mySupport.title}</span>
+				</a>
+		    </p>
+		{{/each}}
+	</script>
+	
+	<div class="user-item clearfix">
+		<div class="c-box toright">
+			<h3 class="c-h3">
+				${person}关注的项目 ($myFollowList.count)
+			</h3>
+			<div class="c-body">
+				#if($myFollowList.count == 0)
+					#if($canEdit)
+						<p class="no-count">您还没有关注的项目，快去关注自己感兴趣的项目吧！</p>
+					#else
+						<p class="no-count">${person}还没有关注的项目</p>
+					#end
+				#end
+				#foreach($myFollow in $myFollowList.elements)
+    				<p class="p-info">
+			       		<a href="/proj/${myFollow.id}" target="_blank" class="a-info">
+			        		<img class="img-info" src="${myFollow.coverImg}"/>
+			        		<span class="span-info">${myFollow.title}</span>
+			        	</a>
+		        	</p>
+				#end
+			</div>
+			
+			#if($myFollowList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">$myFollowList.pageCount</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$myFollowList.pageSize" 
+    					data-tmpl="mySupport-tmpl" data-ajax="getMyFollowList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<div class="user-item clearfix">
+		<div class="c-box clearfix toleft">
+			<h3 class="c-h3">
+				${person}关注的人 ($attentionList.count)
+			</h3>
+			<div class="c-body clearfix">
+				#if($attentionList.count == 0)
+					#if($canEdit)
+						<p class="no-count">您还没有关注的人，快去寻找自己的小伙伴关注他们吧！</p>
+					#else
+						<p class="no-count">${person}还没有关注的人</p>
+					#end
+				#end
+				
+				#foreach($attention in $attentionList.elements)
+    				<a class="item-a" href="/user/${attention.userId}" target="_blank">
+    					<img class="a-img" src="${attention.userHeadImg}">
+    					<p class="a-p">${attention.userName}</p>
+    				</a>
+				#end
+			</div>
+			
+			#if($attentionList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">$attentionList.pageCount</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$attentionList.pageSize" 
+    					data-tmpl="attention-tmpl" data-ajax="getAttentionList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<script id="attention-tmpl" type="text/html">
+		{{each(idx, attention) dataList}}
+			<a class="item-a" href="/user/${attention.userId}" target="_blank">
+    			<img class="a-img" src="${attention.userHeadImg}">
+    			<p class="a-p">${attention.userName}</p>
+    		</a>
+		{{/each}}
+	</script>
+	
+	<div class="user-item clearfix">
+		<div class="c-box clearfix toright">
+			<h3 class="c-h3">
+				关注${person}的人 ($beAttentionList.count)
+			</h3>
+			<div class="c-body clearfix">
+				#if($beAttentionList.count == 0)
+					#if($canEdit)
+						<p class="no-count">还没有人关注您，加油哦！</p>
+					#else
+						<p class="no-count">还没有关注${person}的人</p>
+					#end
+				#end
+				
+				#foreach($attention in $beAttentionList.elements)
+    				<a class="item-a" href="/user/${attention.attentionUserId}" target="_blank">
+    					<img class="a-img" src="${attention.userHeadImg}">
+    					<p class="a-p">${attention.userName}</p>
+    				</a>
+				#end
+			</div>
+			
+			#if($beAttentionList.count != 0)
+			<p class="c-page clearfix">
+    			<a href="javascript:;" class="page-link" id="prev">&lt;</a>
+    			<span class="page-span" id="pageNum">1</span>
+    			<span class="page-span"> / </span>
+    			<span class="page-span" id="pageCount">$beAttentionList.pageCount</span>
+    			<a href="javascript:;" class="page-link" id="next">&gt;</a>
+    			<span style="display: none;" id="pageInfo" data-page-size="$beAttentionList.pageSize" 
+    					data-tmpl="beAttention-tmpl" data-ajax="getBeAttentionList"></span>
+    		</p>
+    		#end
+		</div>
+	</div>
+	
+	<script id="beAttention-tmpl" type="text/html">
+		{{each(idx, attention) dataList}}
+			<a class="item-a" href="/user/${attention.attentionUserId}" target="_blank">
+    			<img class="a-img" src="${attention.userHeadImg}">
+    			<p class="a-p">${attention.userName}</p>
+    		</a>
+		{{/each}}
+	</script>
+	
+	<input id="userId" type="hidden" value="${user.id}"/>
+	<input id="userType" type="hidden" value="${user.type}"/>
+	<input id="canEdit" type="hidden" value="
+		#if(${canEdit})1#else0#end"/>
+</div>
+
+<script>
+	window.schoolModel = {
+		"id": "$!{schoolModel.id}",
+		"province": "$!{schoolModel.province}",
+		"univ": "$!{schoolModel.univ}",
+		"school": "$!{schoolModel.school}"
+	};
+	window.birthdayData = "$!{user.birthday}";
+	window.entryYearData = "$!{user.entryYear}";
+	window.sexData = "$!{user.sex}";
+</script>
+<script type="text/javascript" src="/static/js/user.js"></script>

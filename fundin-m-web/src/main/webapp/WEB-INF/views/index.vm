@@ -1,0 +1,36 @@
+<div class="weui_cells nav_bar">
+    <div class="weui_cell weui_cell_select">
+        <div class="weui_cell_primary">
+            <select class="weui_select" id="select-subject">
+            	<option value="" selected>所有</option>
+                #foreach($!{subject} in $!{ProjSubjectEnum.subjectValues()})
+					<option value="$!{subject.code}" 
+						#if($!{navSubject}==$!{subject.code}) selected #end>$!{subject.desc}</option>
+				#end
+            </select>
+        </div>
+        <div class="weui_cell_primary">
+            <select class="weui_select" id="select-require">
+                #foreach($!{require} in $!{ProjRequireEnum.requireValues()})
+					<option value="$!{require.clause}" 
+						#if($!stringTool.isEqual($!{navRequire}, $!{require.clause})) selected #end>$!{require.desc}</option>
+				#end
+            </select>
+        </div>
+        <div class="weui_cell_primary">
+            <select class="weui_select" id="select-location">
+            	#foreach($!{location} in $!{ProjLocationEnum.locationValues()})
+					<option value="$!{location.clause}" 
+						#if($!stringTool.isEqual($!{navLocation}, $!{location.clause})) selected #end>$!{location.desc}</option>
+				#end
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 50px;margin-bottom: 70px;">
+    #parse("/proList.vm")
+</div>
+
+#parse("/tabbar.vm")
+#requireModule(['index'])

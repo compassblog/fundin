@@ -1,0 +1,73 @@
+<script>
+	var projId = ${proj.id};
+	var projTitle = "${proj.title}";
+	var projImgUrl = "${proj.coverImg}";
+	var appId = "${appId}";
+	var loginUserId = "${loginUserId}";
+	var openid = "${openid}";
+</script>
+
+<div class="container" style="margin-bottom: 70px;">
+	<div class="weui_cells weui_cells_radio pro_repay" style="margin-top: -1px;">
+		<div class="weui_panel_hd repay_hd">我要支持</div>
+	        <label class="weui_cell weui_check_label repay_cell">
+	            <div class="weui_cell_bd weui_media_box repay_bd">
+	                	<div class="weui_cell">
+          					<div class="weui_cell_hd"><label class="weui_label" for="payAmount">支持金额</label></div>
+      				     	<div class="weui_cell_bd weui_cell_primary">
+        			        	<input id="payAmount" class="weui_input" type="text" placeholder="请输入支持金额">
+      				      	</div>
+    					</div>
+	            </div>
+	        </label>
+	        <label class="weui_cell weui_check_label repay_cell">
+	            <div class="weui_cell_bd weui_media_box repay_bd">
+	                	<div class="weui_cell">
+          					<div class="weui_cell_hd"><label class="weui_label" for="input-email">我的红包</label></div>
+      				     	<div class="weui_cell_bd weui_cell_primary">
+        			        	#if ($redPacketList.size() > 0)
+								<div class="checkbox-group">
+									#foreach($redPacket in $redPacketList)
+										#if(${redPacket.canUse})
+										<input type="checkbox" name="redpacket" id="redpacket${redPacket.id}" value="${redPacket.amount}"/>
+										<label class="forCheckBox" for="redpacket${redPacket.id}">￥${redPacket.amount} ${redPacket.typeName}×${redPacket.count}</label>
+										#else
+										<input type="checkbox" name="redpacket" id="redpacket${redPacket.id}" value="${redPacket.amount}" disabled="disabled"/>
+										<label class="forCheckBox" for="redpacket${redPacket.id}">￥${redPacket.amount} ${redPacket.typeName}×${redPacket.count}(不可用)</label>
+										#end
+									#end
+								</div>
+								#else
+								无
+								#end
+      				      	</div>
+    					</div>
+	            </div>
+	        </label>
+    </div>
+    
+    <div class="weui_cells weui_cells_radio">
+    	<div class="weui_panel_hd">支付方式</div>
+        <label class="weui_cell weui_check_label">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>微信支付</p>
+            </div>
+            <div class="weui_cell_ft">
+                <input type="radio" class="weui_check" name="pay-radio" checked>
+                <span class="weui_icon_checked"></span>
+            </div>
+        </label>
+    </div>
+</div>
+
+<footer class="pay_bar">
+	<span class="bar_amt">
+		微信支付<small id="support-amt">0</small>元
+	</span>
+	<a id="support-now" class="bar_now weui_btn weui_btn_ext" href="javascript:;">立即支持</a>
+</footer>
+
+<input id="projDesc" type="hidden" value="$!{proj.intro}">
+
+#parse("/toast.vm")
+#requireModule(['pay'])
